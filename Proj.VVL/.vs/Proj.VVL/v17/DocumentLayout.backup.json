@@ -1,0 +1,303 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\services\\kiwoom\\managers\\kiwoomservicemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:services\\kiwoom\\managers\\kiwoomservicemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\services\\kiwoom\\managers\\publishtickermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:services\\kiwoom\\managers\\publishtickermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\kiwoom\\view\\recommandtickerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\kiwoom\\view\\recommandtickerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\viewmodels\\mainformviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:viewmodels\\mainformviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\kiwoomhandlers\\recommandtickerhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\kiwoomhandlers\\recommandtickerhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\kiwoom\\view\\debugconsoleform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\kiwoom\\view\\debugconsoleform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\model\\recommandtickermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:model\\recommandtickermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\kiwoomhandlers\\loginhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\kiwoomhandlers\\loginhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\viewmodels\\base\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:viewmodels\\base\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\data\\define.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:data\\define.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\services\\kiwoom\\managers\\loginmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:services\\kiwoom\\managers\\loginmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\model\\mainformmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:model\\mainformmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\pubsub\\subscriber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\pubsub\\subscriber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 62,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RecommandTickerForm.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "RelativeDocumentMoniker": "Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "RelativeToolTip": "Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAADwvxkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T15:27:43.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MainForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs",
+              "RelativeDocumentMoniker": "Views\\MainForm.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "Views\\MainForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T14:48:59.183Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoginHandler.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomHandlers\\LoginHandler.cs",
+              "RelativeDocumentMoniker": "Interfaces\\KiwoomHandlers\\LoginHandler.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomHandlers\\LoginHandler.cs",
+              "RelativeToolTip": "Interfaces\\KiwoomHandlers\\LoginHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T15:14:40.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Subscriber.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\PubSub\\Subscriber.cs",
+              "RelativeDocumentMoniker": "Interfaces\\PubSub\\Subscriber.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\PubSub\\Subscriber.cs",
+              "RelativeToolTip": "Interfaces\\PubSub\\Subscriber.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T14:35:25.748Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 67,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DebugConsoleForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\Kiwoom\\View\\DebugConsoleForm.cs",
+              "RelativeDocumentMoniker": "Views\\Kiwoom\\View\\DebugConsoleForm.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\Kiwoom\\View\\DebugConsoleForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "Views\\Kiwoom\\View\\DebugConsoleForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T15:15:36.651Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PublishTickerManager.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Kiwoom\\Managers\\PublishTickerManager.cs",
+              "RelativeDocumentMoniker": "Services\\Kiwoom\\Managers\\PublishTickerManager.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Kiwoom\\Managers\\PublishTickerManager.cs",
+              "RelativeToolTip": "Services\\Kiwoom\\Managers\\PublishTickerManager.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAewBYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T14:51:24.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\ViewModels\\Base\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "ViewModels\\Base\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\ViewModels\\Base\\ViewModelBase.cs",
+              "RelativeToolTip": "ViewModels\\Base\\ViewModelBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswAwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T14:02:16.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LoginManager.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Kiwoom\\Managers\\LoginManager.cs",
+              "RelativeDocumentMoniker": "Services\\Kiwoom\\Managers\\LoginManager.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Kiwoom\\Managers\\LoginManager.cs",
+              "RelativeToolTip": "Services\\Kiwoom\\Managers\\LoginManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T15:10:45.162Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "KiwoomServiceManager.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Kiwoom\\Managers\\KiwoomServiceManager.cs",
+              "RelativeDocumentMoniker": "Services\\Kiwoom\\Managers\\KiwoomServiceManager.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Kiwoom\\Managers\\KiwoomServiceManager.cs",
+              "RelativeToolTip": "Services\\Kiwoom\\Managers\\KiwoomServiceManager.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAvwBkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T14:15:51.135Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "9ae3c859-0b88-4497-ba3b-85a8b32e6058",
+        "Display": 1,
+        "X": -633,
+        "Y": 297,
+        "Width": 1007,
+        "Height": 723,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 121,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Define.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Data\\Define.cs",
+              "RelativeDocumentMoniker": "Data\\Define.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Data\\Define.cs",
+              "RelativeToolTip": "Data\\Define.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T13:59:15.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MainFormModel.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Model\\MainFormModel.cs",
+              "RelativeDocumentMoniker": "Model\\MainFormModel.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Model\\MainFormModel.cs",
+              "RelativeToolTip": "Model\\MainFormModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T16:04:06.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RecommandTickerModel.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Model\\RecommandTickerModel.cs",
+              "RelativeDocumentMoniker": "Model\\RecommandTickerModel.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Model\\RecommandTickerModel.cs",
+              "RelativeToolTip": "Model\\RecommandTickerModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswBkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T16:03:54.76Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 279,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RecommandTickerHandler.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomHandlers\\RecommandTickerHandler.cs",
+              "RelativeDocumentMoniker": "Interfaces\\KiwoomHandlers\\RecommandTickerHandler.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomHandlers\\RecommandTickerHandler.cs",
+              "RelativeToolTip": "Interfaces\\KiwoomHandlers\\RecommandTickerHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswBEAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T13:54:55.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainFormViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\ViewModels\\MainFormViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainFormViewModel.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\ViewModels\\MainFormViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainFormViewModel.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAswBMAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T15:14:24.599Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs",
+              "RelativeDocumentMoniker": "Views\\MainForm.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs",
+              "RelativeToolTip": "Views\\MainForm.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAA0wEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T14:10:23.496Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
