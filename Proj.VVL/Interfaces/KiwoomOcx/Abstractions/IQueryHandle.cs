@@ -13,8 +13,6 @@ namespace Proj.VVL.Interfaces.KiwoomOcx.Abstractions
         public void DisconnectRealData(string 화면번호);
         public int GetRepeatCnt(string TR이름, string 레코드이름);
         public ERROR_CODE_DEF CommKwRqData(string 조회종목리스트, int 종목코드개수, KIWOOM_nTypeFlag 타입, string 사용자구분명, string 화면번호);
-        public string GetCommData(string TR이름, string 레코드이름, int nIndex번째, string 출력항목이름);
-        public object GetCommdataEx(string TR이름, string 레코드이름);
 
 
     }

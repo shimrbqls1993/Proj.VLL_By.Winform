@@ -18,6 +18,7 @@ namespace Proj.VVL.View.Kiwoom
         internal QueryFuncDef query;
         internal OrderFuncDef order;
         internal TickerInfoFuncDef ticker;
+        internal ReceiveDataHandlerDef recvDataHandler;
         public OcxContainerForm()
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace Proj.VVL.View.Kiwoom
             query = new QueryFuncDef(axkhOpenapi);
             order = new OrderFuncDef(axkhOpenapi);
             ticker = new TickerInfoFuncDef(axkhOpenapi);
+            recvDataHandler = new ReceiveDataHandlerDef(axkhOpenapi);
         }
     }
 }

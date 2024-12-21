@@ -59,3 +59,4 @@ C:\Users\littl\Documents\GitHub\Proj.VLL_By.Winform\Proj.VVL\obj\x86\Debug\net8.
 C:\Users\littl\Documents\GitHub\Proj.VLL_By.Winform\Proj.VVL\bin\x86\Debug\net8.0-windows\CommunityToolkit.Mvvm.dll
 C:\Users\littl\Documents\GitHub\Proj.VLL_By.Winform\Proj.VVL\bin\x86\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\littl\Documents\GitHub\Proj.VLL_By.Winform\Proj.VVL\bin\x86\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\littl\Documents\GitHub\Proj.VLL_By.Winform\Proj.VVL\bin\x86\Debug\net8.0-windows\Newtonsoft.Json.dll

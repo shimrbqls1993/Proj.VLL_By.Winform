@@ -1,4 +1,5 @@
-﻿using Proj.VVL.Interfaces.KiwoomHandlers;
+﻿using Proj.VVL.Interfaces.DataInventoryHandlers;
+using Proj.VVL.Interfaces.KiwoomHandlers;
 using Proj.VVL.Interfaces.KiwoomHandlers.Abstractions;
 using Proj.VVL.Model;
 using System;
@@ -24,7 +25,7 @@ namespace Proj.VVL.Interfaces.PubSub
         public Publisher(ObservableCollection<Ticker> tickers)
         {
             _tickers = tickers;
-            tickers.CollectionChanged += TickersChanged;
+            //tickers.CollectionChanged += TickersChanged;
         }
 
         public void Init()
@@ -33,7 +34,6 @@ namespace Proj.VVL.Interfaces.PubSub
             {
                 if (!string.IsNullOrEmpty(_tickers[i].Code))
                 {
-                    publishedTickers.Add(new Published(_tickers[i].Code));
                     CreateSubscribers(_tickers[i].Code);
                 }
             }
@@ -41,7 +41,7 @@ namespace Proj.VVL.Interfaces.PubSub
 
         void CreateSubscribers(string code)
         {
-
+            
         }
 
         void ReactiveSubscribers(string code)

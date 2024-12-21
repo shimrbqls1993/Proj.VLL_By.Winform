@@ -13,7 +13,10 @@ namespace Proj.VVL.Data
     {
         public static string LOG_DIR_PATH = Application.StartupPath + "\\Logger";
         public static string COLLECTION_DIR_PATH = Application.StartupPath + "\\Collection";
+
         public static string DATA_DIR_PATH = Application.StartupPath + "\\Data";
+        public static string CANDLE_STICK_DIR_PATH = DATA_DIR_PATH + "\\CandleSticks";
+
         public static string RECOMMAND_TICKER_DATA_PATH = DATA_DIR_PATH + "\\Recommand_Ticker.xlsx";
         public const string SHEET_NAME_CRYPTO = "Crypto";
         public const string SHEET_NAME_K_STOCK = "Korea_Stock";
@@ -35,6 +38,10 @@ namespace Proj.VVL.Data
                 {
                     Directory.CreateDirectory(DATA_DIR_PATH);
                 }
+                if (!Directory.Exists(CANDLE_STICK_DIR_PATH))
+                {
+                    Directory.CreateDirectory(CANDLE_STICK_DIR_PATH);
+                }
                 return true;
             }
             catch (Exception ex)
@@ -48,5 +55,57 @@ namespace Proj.VVL.Data
     public class KIWOOM
     {
         public static ObservableCollection<Ticker> KOREA_TICKERS = new ObservableCollection<Ticker>();
+    }
+
+    public class CANDLE_DATA_DEF
+    {
+        public CANDLE_STICK_DEF[] WEEK = Array.Empty<CANDLE_STICK_DEF>();
+        public CANDLE_STICK_DEF[] DAY = Array.Empty<CANDLE_STICK_DEF>();
+        public CANDLE_STICK_DEF[] HOUR = Array.Empty<CANDLE_STICK_DEF>();
+        public CANDLE_STICK_DEF[] MIN_5 = Array.Empty<CANDLE_STICK_DEF>();
+        public CANDLE_STICK_DEF[] MIN_1 = Array.Empty<CANDLE_STICK_DEF>();
+        public int[] SUPPORT_REGIST_LINE = Array.Empty<int>();
+        public FIBONACCI[] F_PATTERN = Array.Empty<FIBONACCI>();
+        public ELLIOTT_WAVE_IMPULSE[] IMPULSE = Array.Empty<ELLIOTT_WAVE_IMPULSE>();
+        public ELLIOTT_WAVE_CORRECTION[] CORRECTION = Array.Empty <ELLIOTT_WAVE_CORRECTION>();
+    }
+
+    public class ELLIOTT_WAVE_CORRECTION
+    {
+        public int A { get; set; }
+        public int B { get; set; }
+        public int C { get; set; }
+    }
+
+    public class ELLIOTT_WAVE_IMPULSE
+    {
+        public int W1 { get; set; }
+        public int W2 { get; set; }
+        public int W3 { get; set; }
+        public int W4 { get; set; }
+        public int W5 { get; set; }
+    }
+
+    public class FIBONACCI
+    {
+        public int LINE_0 { get; set; }
+        public int LINE_236 { get; set; }
+        public int LINE_382 { get; set; }
+        public int LINE_5 { get; set; }
+        public int LINE_618 { get; set; }
+        public int LINE_786 { get; set; }
+        public int LINE_1 { get; set; }
+        public int LINE_1414 { get; set; }
+        public int LINE_1618 { get; set; }
+    }
+
+    public class CANDLE_STICK_DEF
+    {
+        public double UpStroke { get; set; }
+        public double DownStroke { get; set; }
+        public double StartBody { get; set; }
+        public double EndBody { get; set; }
+        public string Time { get; set; }
+        public long Volume { get; set; }
     }
 }

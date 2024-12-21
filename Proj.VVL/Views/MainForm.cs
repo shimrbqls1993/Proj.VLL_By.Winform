@@ -30,7 +30,6 @@ namespace Proj.VVL
         ColumnSeries<int> columnS = new ColumnSeries<int> { Values = columnInts };
         Views.Common.DebugConsolePanel MainDebugConsole = new Views.Common.DebugConsolePanel();
 
-        public Publisher PublishTicker;
         public static MainForm Instance;
         BindingSource loginViewModelBindingSource;
         public MainFormViewModel viewModel;
@@ -41,7 +40,7 @@ namespace Proj.VVL
         {
             InitializeComponent();
             Handlers = ConfigurationHandler();
-            KiwoomServices = new KiwoomServiceManager(Handlers.GetService<RecommandTickerHandler>());
+            KiwoomServices = new KiwoomServiceManager(Handlers.GetService<RecommandTickerHandler>(), Handlers.GetService<ScreenNumberHandler>());
             viewModel = new MainFormViewModel(Handlers.GetService<LoginHandler>());
             loginViewModelBindingSource = new BindingSource();
             loginViewModelBindingSource.DataSource = viewModel;
@@ -114,12 +113,19 @@ namespace Proj.VVL
             ServiceCollection handlers = new ServiceCollection();
             handlers.AddTransient(typeof(LoginHandler));
             handlers.AddTransient(typeof(RecommandTickerHandler));
+            handlers.AddTransient(typeof(ScreenNumberHandler));
             return handlers.BuildServiceProvider();
         }
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Subscriber subTest = new Subscriber();
+            subTest.GetKiwoomCandleData("000660",DateTime.Now);
         }
     }
 }

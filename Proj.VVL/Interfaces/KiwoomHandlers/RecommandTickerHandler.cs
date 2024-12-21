@@ -92,6 +92,10 @@ namespace Proj.VVL.Interfaces.KiwoomHandlers
         {
             try
             {
+                if(IsAlreadyPulished(code, tickers))
+                {
+                    return false;
+                }
                 FileInfo info = new FileInfo(Data.Define.RECOMMAND_TICKER_DATA_PATH);
                 using (ExcelPackage pack = new ExcelPackage(info))
                 {
@@ -138,6 +142,21 @@ namespace Proj.VVL.Interfaces.KiwoomHandlers
                 Debug.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        private bool IsAlreadyPulished(string code, ObservableCollection<Ticker> tickersCollection)
+        {
+            foreach (Ticker ticker in tickersCollection)
+            {
+                if (!string.IsNullOrEmpty(ticker.Code))
+                {
+                    if(ticker.Code == code)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

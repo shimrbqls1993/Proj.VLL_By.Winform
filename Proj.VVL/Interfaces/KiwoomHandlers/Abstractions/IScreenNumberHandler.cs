@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Proj.VVL.Interfaces.KiwoomHandlers.Abstractions
 {
-    internal interface IScreenNumberHandler
+    public interface IScreenNumberHandler
     {
         public int GetScreenNumber();
         public void ReleaseScreenNumber(int releaseNumber);
+        
     }
 }

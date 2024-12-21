@@ -16,8 +16,6 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         public QueryFuncDef(AxKHOpenAPI OcxObjBind)
         {
             OcxObject = OcxObjBind;
-            OcxObject.OnReceiveTrData += RegistOnReceiveTrData;
-            OcxObject.OnReceiveRealData += RegistOnReceiveRealData;
         }
 
         public ERROR_CODE_DEF CommRqData(string 사용자구분명, string 조회하려는TR이름, int 연속조회여부, string 화면번호)
@@ -77,49 +75,17 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         {
             return (ERROR_CODE_DEF)OcxObject.CommKwRqData(조회종목리스트, 0, 종목코드개수, (int)타입, 사용자구분명, 화면번호);
         }
-        /// <summary>
-        /// OnReceiveTRData()이벤트가 발생될때 수신한 데이터를 얻어오는 함수입니다.
-        /// 이 함수는 OnReceiveTRData()이벤트가 발생될때 그 안에서 사용해야 합니다.
-        /// </summary>
-        /// <param name="TR이름"></param>
-        /// <param name="레코드이름"></param>
-        /// <param name="nIndex번째"></param>
-        /// <param name="출력항목이름"></param>
-        /// <returns></returns>
-        public string GetCommData(string TR이름, string 레코드이름, int nIndex번째, string 출력항목이름)
-        {
-            return OcxObject.GetCommData(TR이름, 레코드이름, nIndex번째, 출력항목이름);
-        }
-
-        /// <summary>
-        /// 조회 수신데이터 크기가 큰 차트데이터를 한번에 가져올 목적으로 만든 차트조회 전용함수입니다.
-        /// </summary>
-        /// <param name="TR이름"></param>
-        /// <param name="레코드이름"></param>
-        /// <returns></returns>
-        public object GetCommdataEx(string TR이름, string 레코드이름)
-        {
-            return OcxObject.GetCommDataEx(TR이름, 레코드이름);
-        }
 
         public void RegistOnReceiveTrData(object sender, _DKHOpenAPIEvents_OnReceiveTrDataEvent e)
         {
-
-            /*
-            int nCnt = GetRepeatCnt(e.sTrCode, e.sRQName);
-            int i = 0;
-            do
+            switch (e.sRQName)
             {
-                switch ()
-                {
-                    case :
-                }
-                i++;
+                case nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청):
+                    break;
             }
-            while (i <= nCnt)
-            */
             /*
-            if(e.sRQName == "RQName")
+            int i = 0;
+            if(e.sRQName == nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청))
             {
                 string strData = GetCommData(e.sTrCode, e.sRQName, i, "종목코드");
                 Debug.WriteLine(strData);

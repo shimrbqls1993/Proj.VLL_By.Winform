@@ -87,14 +87,14 @@
             // loginToolStripMenuItem
             // 
             loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            loginToolStripMenuItem.Size = new Size(224, 26);
+            loginToolStripMenuItem.Size = new Size(140, 26);
             loginToolStripMenuItem.Text = "Login";
             loginToolStripMenuItem.Click += loginToolStripMenuItem_Click;
             // 
             // logoutToolStripMenuItem
             // 
             logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            logoutToolStripMenuItem.Size = new Size(224, 26);
+            logoutToolStripMenuItem.Size = new Size(140, 26);
             logoutToolStripMenuItem.Text = "Logout";
             // 
             // viewToolStripMenuItem
@@ -368,6 +368,7 @@
             button2.TabIndex = 1;
             button2.Text = "1D";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 

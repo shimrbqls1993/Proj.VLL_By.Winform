@@ -15,23 +15,28 @@ namespace Proj.VVL.Services.Kiwoom.Managers
         public LoginManager loginManager;
         public SendTrManager sendTrManager;
         public PublishTickerManager recommandTickerManager;
-        public KiwoomServiceManager(IRecommandTickerHandler hRecommandTicker)
+        public ScreenNumberManager screenNumberManager;
+    
+        public KiwoomServiceManager(IRecommandTickerHandler hRecommandTicker, IScreenNumberHandler hScreenNumber)
         {
             loginManager = new LoginManager();
             sendTrManager = new SendTrManager();
             recommandTickerManager = new PublishTickerManager(hRecommandTicker);
+            screenNumberManager = new ScreenNumberManager(hScreenNumber);
         }
 
         public void ServiceStart()
         {
             loginManager.Start();
             sendTrManager.Start();
+            screenNumberManager.Start();
         }
 
         public void ServiceStop()
         {
             loginManager?.Stop();
             sendTrManager?.Stop();
+            screenNumberManager?.Start();
         }
     }
 }

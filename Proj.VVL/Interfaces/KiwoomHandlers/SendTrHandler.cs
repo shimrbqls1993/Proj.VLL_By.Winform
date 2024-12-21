@@ -16,19 +16,11 @@ namespace Proj.VVL.Interfaces.KiwoomHandlers
         const int MAX_TR_CNT = 5;
         public static int TR_CNT = 0;
 
-        /// <summary>
-        /// 조회시 1초당 5회 횟수는 CommRqData(), CommKwRqData(), SendCondition() 함수 사용이 합산되고
-        /// 조회와 별개로 주문시 1초당 5회 횟수는 SendOrder(), SendOrderFO() 함수 사용이 합산됩니다.
-        /// </summary>
+
         public SendTrHandler()
         {
-            autoResetEvent = new AutoResetEvent(false);
-            timer_ClearTrCount = new System.Threading.Timer(ClearTrCount, autoResetEvent, 0, 1000);
-        }
-
-        void ClearTrCount(object? sender)
-        {
-            TR_CNT = 0;
+            //autoResetEvent = new AutoResetEvent(false);
+            //timer_ClearTrCount = new System.Threading.Timer(ClearTrCount, autoResetEvent, 0, 1000);
         }
 
         public ERROR_CODE_DEF Send(Func<ERROR_CODE_DEF> func)
