@@ -9,12 +9,12 @@ using System.Xml;
 using Newtonsoft.Json;
 using Proj.VVL.Data;
 using Proj.VVL.Interfaces.PubSub.Subscribers;
+using LiveChartsCore.Defaults;
 
 namespace Proj.VVL.Interfaces.DataInventoryHandlers
 {
     public class JsonHandler : IJsonHandler
     {
-
         public void WriteJsonToFile(CANDLE_STICK_DEF[] data, string filePath)
         {
             string jsonData = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);

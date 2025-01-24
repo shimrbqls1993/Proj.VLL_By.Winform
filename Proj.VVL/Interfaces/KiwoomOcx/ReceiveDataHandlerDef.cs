@@ -1,10 +1,12 @@
 ﻿using AxKHOpenAPILib;
+using LiveChartsCore.Defaults;
 using Proj.VVL.Data;
 using Proj.VVL.Interfaces.DataInventoryHandlers;
 using Proj.VVL.Interfaces.KiwoomOcx.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,54 +49,106 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
             return OcxObject.GetCommDataEx(TR이름, 레코드이름);
         }
 
+        /// <summary>
+        /// Send시 RQName의 포맷은 $"{nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청)};{종목코드};{(int)CANDLE_TIME_FRAME_DEF}";
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void RegistOnReceiveTrData(object sender, _DKHOpenAPIEvents_OnReceiveTrDataEvent e)
         {
             string[] parseRqName = e.sRQName.Split(';');
             string TrCode = parseRqName[0];
             string Ticker = parseRqName[1];
+            CANDLE_TIME_FRAME_DEF TimeFrame = (CANDLE_TIME_FRAME_DEF)int.Parse(parseRqName[2]);
             switch (TrCode)
             {
                 case nameof(KIWOOM_OPT_TR_CODE_DEF.주식주봉차트조회요청):
-
+                    OPT주식주봉차트조회요청(e, Ticker, TimeFrame);
                     break;
                 case nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청):
-                    OPT주식일봉차트조회요청(e, Ticker);
+                    OPT주식일봉차트조회요청(e, Ticker, TimeFrame);
                     break;
-
                 case nameof(KIWOOM_OPT_TR_CODE_DEF.주식분봉차트조회요청):
-
+                    OPT주식분봉차트조회요청(e, Ticker, TimeFrame);
                     break;
             }
         }
 
-        public void OPT주식일봉차트조회요청(_DKHOpenAPIEvents_OnReceiveTrDataEvent eventHandle, string code)
+        /// <summary>
+        /// Datetime string format = YYYYMMDD
+        /// </summary>
+        /// <param name="eventHandle"></param>
+        /// <param name="code"></param>
+        /// <param name="timeFrame"></param>
+        public void OPT주식일봉차트조회요청(_DKHOpenAPIEvents_OnReceiveTrDataEvent eventHandle, string code, CANDLE_TIME_FRAME_DEF timeFrame)
         {
-            //주식일봉차트조회요청_Output i = 주식일봉차트조회요청_Output.종목코드;
             object[,]recvDatas = (object[,])GetCommDataEx(eventHandle.sTrCode,eventHandle.sRQName);
             List<CANDLE_STICK_DEF> datas = new List<CANDLE_STICK_DEF>();
-            for(int row= 0; row < recvDatas.GetLength(0); row++)
+            DateTime timeTmp;
+            for (int row = recvDatas.GetLength(0) - 1; row >= 0; row--)
             {
                 CANDLE_STICK_DEF candleData = new CANDLE_STICK_DEF();
-                candleData.EndBody = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.현재가]);
+                candleData.Close = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.현재가]);
                 candleData.Volume = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.거래량]);
-                candleData.Time = (string)recvDatas[row, (int)주식일봉차트조회요청_Output.일자];
-                candleData.StartBody = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.시가]);
-                candleData.UpStroke = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.고가]);
-                candleData.DownStroke = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.저가]);
+                candleData.Open = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.시가]);
+                candleData.High = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.고가]);
+                candleData.Low = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.저가]);
+                candleData.Datetime = (string)recvDatas[row, (int)주식일봉차트조회요청_Output.일자];
                 datas.Add(candleData);
-
-                //주식차트조회요청 chartData = new 주식차트조회요청();
-                //chartData.현재가 = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.현재가]);
-                //chartData.거래량 = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.거래량]);
-                //chartData.거래대금 = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.거래대금]);
-                //chartData.체결시간 = (string)recvDatas[row, (int)주식일봉차트조회요청_Output.일자];
-                //chartData.시가 = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.시가]);
-                //chartData.고가 = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.고가]);
-                //chartData.저가 = int.Parse((string)recvDatas[row, (int)주식일봉차트조회요청_Output.저가]);
-                //Debug.WriteLine($"{chartData.체결시간} : {chartData.현재가} {chartData.시가} {chartData.고가} {chartData.저가}");
             }
             CandleSticks storeData = new CandleSticks(code);
-            storeData.AddChartCandleStick(datas.ToArray(),CANDLE_TIME_FRAME_DEF.DAY);
+            storeData.AddChartCandleStick(datas.ToArray(), timeFrame);
+        }
+
+        /// <summary>
+        /// Datetime string format = YYYYMMDDHHmm
+        /// </summary>
+        /// <param name="eventHandle"></param>
+        /// <param name="code"></param>
+        /// <param name="timeFrame"></param>
+        public void OPT주식분봉차트조회요청(_DKHOpenAPIEvents_OnReceiveTrDataEvent eventHandle, string code, CANDLE_TIME_FRAME_DEF timeFrame)
+        {
+            object[,] recvDatas = (object[,])GetCommDataEx(eventHandle.sTrCode, eventHandle.sRQName);
+            List<CANDLE_STICK_DEF> datas = new List<CANDLE_STICK_DEF>();
+            DateTime timeTmp;
+            for (int row = 0; row < recvDatas.GetLength(0); row++)
+            {
+                CANDLE_STICK_DEF candleData = new CANDLE_STICK_DEF();
+                candleData.Close = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.현재가]);
+                candleData.Volume = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.거래량]);
+                candleData.Open = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.시가]);
+                candleData.High = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.고가]);
+                candleData.Low = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.저가]);
+                candleData.Datetime = (string)recvDatas[row, (int)주식분봉차트조회요청_Output.체결시간];
+                datas.Add(candleData);
+            }
+            CandleSticks storeData = new CandleSticks(code);
+            storeData.AddChartCandleStick(datas.ToArray(), timeFrame);
+        }
+
+        /// <summary>
+        /// Time String Format = YYYYMMDD
+        /// </summary>
+        /// <param name="eventHandle"></param>
+        /// <param name="code"></param>
+        /// <param name="timeFrame"></param>
+        public void OPT주식주봉차트조회요청(_DKHOpenAPIEvents_OnReceiveTrDataEvent eventHandle, string code, CANDLE_TIME_FRAME_DEF timeFrame)
+        {
+            object[,] recvDatas = (object[,])GetCommDataEx(eventHandle.sTrCode, eventHandle.sRQName);
+            List<CANDLE_STICK_DEF> datas = new List<CANDLE_STICK_DEF>();
+            for (int row = 0; row < recvDatas.GetLength(0); row++)
+            {
+                CANDLE_STICK_DEF candleData = new CANDLE_STICK_DEF();
+                candleData.Close = int.Parse((string)recvDatas[row, (int)주식주봉차트조회요청_Output.현재가]);
+                candleData.Volume = int.Parse((string)recvDatas[row, (int)주식주봉차트조회요청_Output.거래량]);
+                candleData.Open = int.Parse((string)recvDatas[row, (int)주식주봉차트조회요청_Output.시가]);
+                candleData.High = int.Parse((string)recvDatas[row, (int)주식주봉차트조회요청_Output.고가]);
+                candleData.Low = int.Parse((string)recvDatas[row, (int)주식주봉차트조회요청_Output.저가]);
+                candleData.Datetime = (string)recvDatas[row, (int)주식주봉차트조회요청_Output.일자];
+                datas.Add(candleData);
+            }
+            CandleSticks storeData = new CandleSticks(code);
+            storeData.AddChartCandleStick(datas.ToArray(), timeFrame);
         }
 
         /// <summary>

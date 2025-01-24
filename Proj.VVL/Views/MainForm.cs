@@ -1,8 +1,11 @@
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
 using LiveChartsCore.Geo;
 using LiveChartsCore.SkiaSharpView;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualBasic.Logging;
+using Proj.VVL.Data;
+using Proj.VVL.Interfaces.Chart;
 using Proj.VVL.Interfaces.KiwoomHandlers;
 using Proj.VVL.Interfaces.KiwoomOcx;
 using Proj.VVL.Interfaces.PubSub;
@@ -29,10 +32,10 @@ namespace Proj.VVL
         LineSeries<int> lineS = new LineSeries<int> { Values = lineInts };
         ColumnSeries<int> columnS = new ColumnSeries<int> { Values = columnInts };
         Views.Common.DebugConsolePanel MainDebugConsole = new Views.Common.DebugConsolePanel();
-
         public static MainForm Instance;
         BindingSource loginViewModelBindingSource;
         public MainFormViewModel viewModel;
+        public LiveChartProperties liveChartProperties;
 
         public IServiceProvider Handlers { get; }
 
@@ -52,15 +55,6 @@ namespace Proj.VVL
             {
                 MessageBox.Show("Create Directory Failed");
             }
-
-
-            /*
-            ChartViewer.Series = new ISeries[]
-            {
-                lineS,columnS
-            };
-            ChartViewer.ZoomMode = LiveChartsCore.Measure.ZoomAndPanMode.X;
-            */
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -125,7 +119,17 @@ namespace Proj.VVL
         private void button2_Click(object sender, EventArgs e)
         {
             Subscriber subTest = new Subscriber();
-            subTest.GetKiwoomCandleData("000660",DateTime.Now);
+            subTest.GetKiwoomCandleData("000660", DateTime.Now);
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            ChartHandler hChart = new ChartHandler("000660", Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.DAY);
+            liveChartProperties = hChart.GetCandleData();
+            ChartViewer.Series = liveChartProperties.Series;
+            ChartViewer.XAxes = liveChartProperties.xAxes;
+            ChartViewer.YAxes = liveChartProperties.yAxes;
+            ChartViewer.ZoomMode = LiveChartsCore.Measure.ZoomAndPanMode.X;
         }
     }
 }

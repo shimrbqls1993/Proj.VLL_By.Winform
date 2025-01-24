@@ -1,7 +1,12 @@
-﻿using System;
+﻿using LiveChartsCore;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.Kernel.Sketches;
+using LiveChartsCore.SkiaSharpView;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +26,8 @@ namespace Proj.VVL.Data
         public const string SHEET_NAME_CRYPTO = "Crypto";
         public const string SHEET_NAME_K_STOCK = "Korea_Stock";
         public const string SHEET_NAME_US_STOCK = "US_STOCK";
+        public const string ShortStr2DateTimeFormat = "yyyyMMdd";
+        public const string LongStr2DateTimeFormat = "yyyyMMddHHmm";
 
         public static bool CreateAllDirectory()
         {
@@ -57,6 +64,13 @@ namespace Proj.VVL.Data
         public static ObservableCollection<Ticker> KOREA_TICKERS = new ObservableCollection<Ticker>();
     }
 
+    public class LiveChartProperties
+    {
+        public IEnumerable<ISeries> Series { get; set; }
+        public IEnumerable<ICartesianAxis> xAxes { get; set; }
+        public IEnumerable<ICartesianAxis> yAxes { get; set; }
+    }
+
     public class CANDLE_DATA_DEF
     {
         public CANDLE_STICK_DEF[] WEEK = Array.Empty<CANDLE_STICK_DEF>();
@@ -65,9 +79,17 @@ namespace Proj.VVL.Data
         public CANDLE_STICK_DEF[] MIN_5 = Array.Empty<CANDLE_STICK_DEF>();
         public CANDLE_STICK_DEF[] MIN_1 = Array.Empty<CANDLE_STICK_DEF>();
         public int[] SUPPORT_REGIST_LINE = Array.Empty<int>();
+        public MOVING_AVR_DEF MOVING_AVR;
         public FIBONACCI[] F_PATTERN = Array.Empty<FIBONACCI>();
         public ELLIOTT_WAVE_IMPULSE[] IMPULSE = Array.Empty<ELLIOTT_WAVE_IMPULSE>();
         public ELLIOTT_WAVE_CORRECTION[] CORRECTION = Array.Empty <ELLIOTT_WAVE_CORRECTION>();
+    }
+
+    public class MOVING_AVR_DEF
+    {
+        public int[] HOUR = Array.Empty<int>();
+        public int[] DAY = Array.Empty<int>();
+        public int[] WEEK = Array.Empty<int>();
     }
 
     public class ELLIOTT_WAVE_CORRECTION
@@ -101,11 +123,42 @@ namespace Proj.VVL.Data
 
     public class CANDLE_STICK_DEF
     {
-        public double UpStroke { get; set; }
-        public double DownStroke { get; set; }
-        public double StartBody { get; set; }
-        public double EndBody { get; set; }
-        public string Time { get; set; }
-        public long Volume { get; set; }
+        public string Datetime { get; set; }
+        public double Close { get; set; }
+        public double Open { get; set; }
+        public double High { get; set; }
+        public double Low { get; set; }
+        public double Volume { get; set; }
+    }
+
+    public class CommonFunc()
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parseStr"></param>
+        /// <param name="dateTimeFormat"></param>
+        /// ShortStr2DateTimeFormat
+        /// LongStr2DateTimeFormat
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static DateTime ParseString2DateTime(string parseStr, string dateTimeFormat)
+        {
+            //return DateTime.TryParseExact(parseStr, dateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+            return DateTime.ParseExact(parseStr, dateTimeFormat, CultureInfo.InvariantCulture);
+        }
+
+        public static int CalcMovingAvr(double[] 종가s, int candles)
+        {
+            double result = 0;
+
+            foreach (double 종가 in 종가s)
+            {
+                result += 종가;
+            }
+            result /= candles;
+
+            return (int)result;
+        }
     }
 }

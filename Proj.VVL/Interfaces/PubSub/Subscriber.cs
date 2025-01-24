@@ -1,4 +1,5 @@
-﻿using Proj.VVL.Interfaces.KiwoomHandlers;
+﻿using Proj.VVL.Interfaces.DataInventoryHandlers;
+using Proj.VVL.Interfaces.KiwoomHandlers;
 using Proj.VVL.Interfaces.KiwoomOcx;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Proj.VVL.Interfaces.PubSub
                 MainForm.KiwoomOcxObj.query.SetInputValue(nameof(input.종목코드), input.종목코드);
                 MainForm.KiwoomOcxObj.query.SetInputValue(nameof(input.기준일자), input.기준일자);
                 MainForm.KiwoomOcxObj.query.SetInputValue(nameof(input.수정주가구분), input.수정주가구분);
-                string RQName = $"{nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청)};{종목코드}";
+                string RQName = $"{nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청)};{종목코드};{(int)CANDLE_TIME_FRAME_DEF.DAY}";
                 if (MainForm.Instance.KiwoomServices.sendTrManager.Send(
                     MainForm.KiwoomOcxObj.query.CommRqData(RQName,
                     Define.CreateTransactionCode(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청),

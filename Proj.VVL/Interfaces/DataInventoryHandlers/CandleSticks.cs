@@ -1,4 +1,5 @@
-﻿using Proj.VVL.Data;
+﻿using LiveChartsCore.Defaults;
+using Proj.VVL.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,28 +24,24 @@ namespace Proj.VVL.Interfaces.DataInventoryHandlers
             FileName = $"{code}.json";
             FilePath = Path.Combine(Data.Define.CANDLE_STICK_DIR_PATH, FileName);
             IsCandleStickFileExist();
-            Datas = GetCandleDatasFromFile();
         }
 
         public CANDLE_DATA_DEF GetCandleDatasFromFile()
         {
-            if (File.Exists(FilePath))
-            {
-                return jHandle.ReadJsonFromFile<CANDLE_DATA_DEF>(FilePath);
-            }
-            else
-            {
-                return new CANDLE_DATA_DEF();
-            }
+            return jHandle.ReadJsonFromFile<CANDLE_DATA_DEF>(FilePath);
         }
 
-        public void IsCandleStickFileExist()
+        private void IsCandleStickFileExist()
         {
             string path = Path.Combine(FilePath);
             if (!File.Exists(FilePath))
             {
                 Datas = new CANDLE_DATA_DEF();
                 jHandle.WriteJsonToFile(Datas, FilePath);
+            }
+            else
+            {
+                Datas = GetCandleDatasFromFile();
             }
         }
 

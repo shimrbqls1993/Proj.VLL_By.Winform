@@ -6,10 +6,44 @@ using System.Threading.Tasks;
 
 namespace Proj.VVL.Interfaces.KiwoomOcx
 {
+    public class 주식주봉차트조회요청_Input
+    {
+        public string 종목코드 { get; set; }
+        public string 기준일자 { get; set; }
+        public string 끝일자 { get; set; }
+        public string 수정주가구분 { get; set; }
+    }
+
+    public enum 주식주봉차트조회요청_Output
+    {
+        현재가,
+        거래량,
+        거래대금,
+        일자,
+        시가,
+        고가,
+        저가,
+        수정주가구분,
+        수정비율,
+        대업종구분,
+        소업종구분,
+        종목정보,
+        수정주가이벤트,
+        전일종가,
+    }
+
     /// <summary>
     ///  데이터 건수를 지정할 수 없고, 데이터 유무에따라 한번에 최대 900개가 조회됩니다.
     /// </summary>
-    public enum 주식분봉차트조회요청{
+    /// 
+    public class 주식분봉차트조회요청_Input
+    {
+        public string 종목코드 { get; set; }
+        public string 틱범위 { get; set; }
+        public string 수정주가구분 { get; set; }
+    }
+
+    public enum 주식분봉차트조회요청_Output{
         현재가,
         거래량,
         체결시간,

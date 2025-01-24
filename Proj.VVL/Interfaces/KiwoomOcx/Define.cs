@@ -109,7 +109,6 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         관심종목정보요청 = 100000,
         관심종목투자자정보요청,
         관심종목프로그램정보요청,
-
     }
 
     public enum KIWOOM_OPW_TR_CODE_DEF
@@ -439,7 +438,7 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         계좌번호 = 9201,
     }
 
-    internal class Define
+    public class Define
     {
         public static Dictionary<ERROR_CODE_DEF, string> ERROR_CODE_DESC = new Dictionary<ERROR_CODE_DEF, string>
         {
