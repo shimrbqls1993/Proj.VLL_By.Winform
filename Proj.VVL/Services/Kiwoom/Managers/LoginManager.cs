@@ -24,7 +24,7 @@ namespace Proj.VVL.Services.Kiwoom.Managers
             autoResetEvent = new AutoResetEvent(false);
             timer = new System.Threading.Timer(CheckLoginState, autoResetEvent, 0, 5000);
         }
-
+            
         public void Stop()
         {
             autoResetEvent.WaitOne();

@@ -148,7 +148,7 @@ namespace Proj.VVL.Data
             return DateTime.ParseExact(parseStr, dateTimeFormat, CultureInfo.InvariantCulture);
         }
 
-        public static int CalcMovingAvr(double[] 종가s, int candles)
+        public static int CalcMovingAvr(double[] 종가s)
         {
             double result = 0;
 
@@ -156,7 +156,7 @@ namespace Proj.VVL.Data
             {
                 result += 종가;
             }
-            result /= candles;
+            result /= 종가s.Length;
 
             return (int)result;
         }

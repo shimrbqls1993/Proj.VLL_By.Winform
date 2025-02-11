@@ -36,6 +36,7 @@ namespace Proj.VVL
         BindingSource loginViewModelBindingSource;
         public MainFormViewModel viewModel;
         public LiveChartProperties liveChartProperties;
+        public CommonServiceManager commonServices;
 
         public IServiceProvider Handlers { get; }
 
@@ -43,7 +44,7 @@ namespace Proj.VVL
         {
             InitializeComponent();
             Handlers = ConfigurationHandler();
-            KiwoomServices = new KiwoomServiceManager(Handlers.GetService<RecommandTickerHandler>(), Handlers.GetService<ScreenNumberHandler>());
+            ServicesStart();
             viewModel = new MainFormViewModel(Handlers.GetService<LoginHandler>());
             loginViewModelBindingSource = new BindingSource();
             loginViewModelBindingSource.DataSource = viewModel;
@@ -55,6 +56,28 @@ namespace Proj.VVL
             {
                 MessageBox.Show("Create Directory Failed");
             }
+        }
+
+        private void ServicesStart()
+        {
+            KiwoomServices = new KiwoomServiceManager(Handlers.GetService<RecommandTickerHandler>(), Handlers.GetService<ScreenNumberHandler>());
+            KiwoomServices.ServiceStart();
+            commonServices = new CommonServiceManager();
+            commonServices.Start();
+        }
+
+        private void ServicesStop()
+        {
+            if(KiwoomServices != null)
+            {
+                KiwoomServices.ServiceStop();
+            }
+            if(commonServices != null)
+            {
+                commonServices.Stop();
+            }
+            KiwoomServices = null;
+            commonServices = null;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -75,12 +98,12 @@ namespace Proj.VVL
             Label_LoginStatus.DataBindings.Add(new Binding(nameof(Label_LoginStatus.ForeColor), loginViewModelBindingSource, nameof(viewModel.ForeColor), true, DataSourceUpdateMode.OnPropertyChanged));
             loginToolStripMenuItem.DataBindings.Add(new Binding(nameof(loginToolStripMenuItem.Command), loginViewModelBindingSource, nameof(viewModel.LoginCommand), true, DataSourceUpdateMode.OnPropertyChanged));
             dataGridViewPublishing_Init();
-            KiwoomServices.ServiceStart();
+            
         }
 
         private void Form_Closing(object sender, EventArgs e)
         {
-            KiwoomServices.ServiceStop();
+            ServicesStop();
         }
 
         private void 관심종목ToolStripMenuItem_Click(object sender, EventArgs e)
