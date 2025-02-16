@@ -2,12 +2,14 @@
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
+using Proj.VVL.Interfaces.DataInventoryHandlers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static Proj.VVL.Model.RecommandTickerModel;
@@ -78,11 +80,17 @@ namespace Proj.VVL.Data
         public CANDLE_STICK_DEF[] HOUR = Array.Empty<CANDLE_STICK_DEF>();
         public CANDLE_STICK_DEF[] MIN_5 = Array.Empty<CANDLE_STICK_DEF>();
         public CANDLE_STICK_DEF[] MIN_1 = Array.Empty<CANDLE_STICK_DEF>();
-        public int[] SUPPORT_REGIST_LINE = Array.Empty<int>();
+        public SUPPORT_REGIST_LEVEL_DEF[] SUPPORT_REGIST_LINE = Array.Empty<SUPPORT_REGIST_LEVEL_DEF>();
         public MOVING_AVR_DEF MOVING_AVR;
         public FIBONACCI[] F_PATTERN = Array.Empty<FIBONACCI>();
         public ELLIOTT_WAVE_IMPULSE[] IMPULSE = Array.Empty<ELLIOTT_WAVE_IMPULSE>();
         public ELLIOTT_WAVE_CORRECTION[] CORRECTION = Array.Empty <ELLIOTT_WAVE_CORRECTION>();
+    }
+
+    public class SUPPORT_REGIST_LEVEL_DEF
+    {
+        public double price;
+        public CANDLE_TIME_FRAME_DEF time;
     }
 
     public class MOVING_AVR_DEF
@@ -159,6 +167,19 @@ namespace Proj.VVL.Data
             result /= 종가s.Length;
 
             return (int)result;
+        }
+
+        public static bool CandleDataIsVaild(CANDLE_DATA_DEF candleData)
+        {
+            Type candlePricesType = typeof(CANDLE_STICK_DEF);
+            Type candleDataType = typeof(CANDLE_DATA_DEF);
+
+            FieldInfo[] pricesFields = candlePricesType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            foreach(FieldInfo priceField in pricesFields)
+            {
+
+            }
         }
     }
 }

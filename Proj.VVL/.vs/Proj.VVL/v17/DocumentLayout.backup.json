@@ -3,44 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\kiwoomocx\\receivedatahandlerdef.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\kiwoomocx\\receivedatahandlerdef.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\chart\\charthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\chart\\charthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\datainventoryhandlers\\candlesticks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\datainventoryhandlers\\candlesticks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\interfaces\\datainventoryhandlers\\jsonhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\datainventoryhandlers\\jsonhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\behaviors\\common\\calcindecatorsbehaviors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:behaviors\\common\\calcindecatorsbehaviors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\services\\common\\savecsvdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:services\\common\\savecsvdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\views\\kiwoom\\view\\recommandtickerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:views\\kiwoom\\view\\recommandtickerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,136 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 120,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReceiveDataHandlerDef.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomOcx\\ReceiveDataHandlerDef.cs",
-              "RelativeDocumentMoniker": "Interfaces\\KiwoomOcx\\ReceiveDataHandlerDef.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomOcx\\ReceiveDataHandlerDef.cs",
-              "RelativeToolTip": "Interfaces\\KiwoomOcx\\ReceiveDataHandlerDef.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAD4v3wAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:53:44.555Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ChartHandler.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\Chart\\ChartHandler.cs",
-              "RelativeDocumentMoniker": "Interfaces\\Chart\\ChartHandler.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\Chart\\ChartHandler.cs",
-              "RelativeToolTip": "Interfaces\\Chart\\ChartHandler.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAMwBsAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:53:39.487Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CandleSticks.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\DataInventoryHandlers\\CandleSticks.cs",
-              "RelativeDocumentMoniker": "Interfaces\\DataInventoryHandlers\\CandleSticks.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\DataInventoryHandlers\\CandleSticks.cs",
-              "RelativeToolTip": "Interfaces\\DataInventoryHandlers\\CandleSticks.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAvwBQAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:51:38.992Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "JsonHandler.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\DataInventoryHandlers\\JsonHandler.cs",
-              "RelativeDocumentMoniker": "Interfaces\\DataInventoryHandlers\\JsonHandler.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\DataInventoryHandlers\\JsonHandler.cs",
-              "RelativeToolTip": "Interfaces\\DataInventoryHandlers\\JsonHandler.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAWwBsAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:50:12.834Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "CalcIndecatorsBehaviors.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Behaviors\\Common\\CalcIndecatorsBehaviors.cs",
               "RelativeDocumentMoniker": "Behaviors\\Common\\CalcIndecatorsBehaviors.cs",
               "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Behaviors\\Common\\CalcIndecatorsBehaviors.cs",
               "RelativeToolTip": "Behaviors\\Common\\CalcIndecatorsBehaviors.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAIwCIAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:49:47.039Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "SaveCsvData.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Common\\SaveCsvData.cs",
-              "RelativeDocumentMoniker": "Services\\Common\\SaveCsvData.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Services\\Common\\SaveCsvData.cs",
-              "RelativeToolTip": "Services\\Common\\SaveCsvData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:47:51.181Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "MainForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.Designer.cs",
-              "RelativeDocumentMoniker": "Views\\MainForm.Designer.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.Designer.cs",
-              "RelativeToolTip": "Views\\MainForm.Designer.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAUwLAAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:44:35.138Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:43:44.566Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainForm.cs",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs",
-              "RelativeDocumentMoniker": "Views\\MainForm.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs",
-              "RelativeToolTip": "Views\\MainForm.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAvwD4AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:23:05.167Z",
+              "WhenOpened": "2025-02-11T21:31:28.156Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MainForm.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs",
-              "RelativeDocumentMoniker": "Views\\MainForm.cs",
-              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\MainForm.cs [\uB514\uC790\uC778]",
-              "RelativeToolTip": "Views\\MainForm.cs [\uB514\uC790\uC778]",
+              "Title": "RecommandTickerForm.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "RelativeDocumentMoniker": "Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "RelativeToolTip": "Views\\Kiwoom\\View\\RecommandTickerForm.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAUwDMAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T21:22:54.532Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
+              "WhenOpened": "2025-02-10T21:58:41.597Z"
             }
           ]
         }
