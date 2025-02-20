@@ -1,10 +1,11 @@
 const fs = require('fs-extra');
 const path = require('path');
+require('dotenv').config();
 
 class FileReaderService {
     constructor() {
-        // 현재 C# 프로그램의 Data/CandleSticks 경로 설정
-        this.dataPath = 'D:/Proj.VLL_By.Winform-main/Data/CandleSticks';
+        this.dataPath = path.join(__dirname, '../../../Data/CandleSticks');
+        console.log('Data path:', this.dataPath);
     }
 
     async readCandleStickData(code, timeFrame) {
