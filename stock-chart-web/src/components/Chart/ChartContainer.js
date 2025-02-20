@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CandleStickChart from './CandleStickChart';
 import TimeFrameSelector from './TimeFrameSelector';
+import IndicatorSidebar from './IndicatorSidebar';
 import Loading from '../Common/Loading';
 
 const ChartContainer = ({ code }) => {
-    const [timeFrame, setTimeFrame] = React.useState('DAY');
-    const [chartData, setChartData] = React.useState([]);
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
+    const [timeFrame, setTimeFrame] = useState('DAY');
+    const [chartData, setChartData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [isIndicatorSidebarOpen, setIsIndicatorSidebarOpen] = useState(false);
+    const [selectedIndicators, setSelectedIndicators] = useState(['volume']); // 기본적으로 거래량 표시
+    const [indicatorSettings, setIndicatorSettings] = useState({
+        ma: {
+            ma5: { period: 5, enabled: true },
+            ma10: { period: 10, enabled: true },
+            ma20: { period: 20, enabled: true },
+            ma60: { period: 60, enabled: true },
+            ma120: { period: 120, enabled: false }
+        }
+    });
+
+    const handleIndicatorSelect = (indicatorId) => {
+        setSelectedIndicators(prev => 
+            prev.includes(indicatorId)
+                ? prev.filter(id => id !== indicatorId)
+                : [...prev, indicatorId]
+        );
+    };
+
+    const handleUpdateSettings = (indicatorId, settings) => {
+        setIndicatorSettings(prev => ({
+            ...prev,
+            [indicatorId]: settings
+        }));
+    };
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -38,11 +65,31 @@ const ChartContainer = ({ code }) => {
 
     return (
         <div className="chart-container">
-            <TimeFrameSelector
-                selectedTimeFrame={timeFrame}
-                onTimeFrameChange={setTimeFrame}
+            <div className="chart-controls">
+                <TimeFrameSelector
+                    selectedTimeFrame={timeFrame}
+                    onTimeFrameChange={setTimeFrame}
+                />
+                <button 
+                    className="timeframe-button indicator-button"
+                    onClick={() => setIsIndicatorSidebarOpen(true)}
+                >
+                    지표
+                </button>
+            </div>
+            <CandleStickChart 
+                data={chartData} 
+                code={code}
+                indicators={selectedIndicators}
+                indicatorSettings={indicatorSettings}
             />
-            <CandleStickChart data={chartData} code={code} />
+            <IndicatorSidebar
+                isOpen={isIndicatorSidebarOpen}
+                onClose={() => setIsIndicatorSidebarOpen(false)}
+                onSelectIndicator={handleIndicatorSelect}
+                selectedIndicators={selectedIndicators}
+                onUpdateSettings={handleUpdateSettings}
+            />
         </div>
     );
 };
