@@ -1,5 +1,22 @@
 import React from 'react';
 import { createChart } from 'lightweight-charts';
+import styled from 'styled-components';
+
+const ChartWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    height: 600px;
+    user-select: none;
+`;
+
+const SelectionBox = styled.div`
+    position: absolute;
+    background-color: rgba(41, 98, 255, 0.1);
+    border: 1px solid rgba(41, 98, 255, 0.3);
+    pointer-events: none;
+    display: none;
+    z-index: 100;
+`;
 
 const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
     const mainChartRef = React.useRef();
@@ -7,14 +24,28 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
     const mainChart = React.useRef();
     const volumeChart = React.useRef();
     const chartContainerRef = React.useRef();
+    const dragStartPosition = React.useRef(null);
+    const selectionBoxRef = React.useRef(null);
+    const isDragging = React.useRef(false);
 
     React.useEffect(() => {
         if (!data || data.length === 0) return;
 
+        // 선택 영역 요소 생성
+        const selectionBox = document.createElement('div');
+        selectionBox.style.position = 'absolute';
+        selectionBox.style.backgroundColor = 'rgba(41, 98, 255, 0.1)';
+        selectionBox.style.border = '1px solid rgba(41, 98, 255, 0.3)';
+        selectionBox.style.pointerEvents = 'none';
+        selectionBox.style.display = 'none';
+        selectionBox.style.zIndex = '100';
+        chartContainerRef.current.appendChild(selectionBox);
+        selectionBoxRef.current = selectionBox;
+
         // 메인 차트 생성 (가격)
         mainChart.current = createChart(mainChartRef.current, {
             width: chartContainerRef.current.clientWidth,
-            height: 480,  // 메인 차트 높이
+            height: 480,
             layout: {
                 background: { color: '#ffffff' },
                 textColor: '#333',
@@ -65,12 +96,21 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                     bottom: 0.1,
                 },
             },
+            handleScroll: {
+                mouseWheel: false,
+                pressedMouseMove: false,
+            },
+            handleScale: {
+                mouseWheel: false,
+                pinch: true,
+                axisPressedMouseMove: false,
+            },
         });
 
         // 거래량 차트 생성
         volumeChart.current = createChart(volumeChartRef.current, {
             width: chartContainerRef.current.clientWidth,
-            height: 120,  // 거래량 차트 높이
+            height: 120,
             layout: {
                 background: { color: '#ffffff' },
                 textColor: '#333',
@@ -87,7 +127,7 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                 },
             },
             timeScale: {
-                visible: false,  // 시간축 숨김
+                visible: false,
             },
             rightPriceScale: {
                 borderColor: '#D1D4DC',
@@ -96,6 +136,15 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                     top: 0.1,
                     bottom: 0.1,
                 },
+            },
+            handleScroll: {
+                mouseWheel: false,
+                pressedMouseMove: false,
+            },
+            handleScale: {
+                mouseWheel: false,
+                pinch: true,
+                axisPressedMouseMove: false,
             },
         });
 
@@ -172,6 +221,146 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                 }
             }, 100);
         }
+
+        // 마우스 이벤트 핸들러 수정
+        const handleMouseDown = (e) => {
+            e.preventDefault();
+            dragStartPosition.current = e.clientX;
+            isDragging.current = true;
+            
+            const chartRect = chartContainerRef.current.getBoundingClientRect();
+            const startX = e.clientX - chartRect.left;
+            
+            selectionBoxRef.current.style.left = `${startX}px`;
+            selectionBoxRef.current.style.top = '0';
+            selectionBoxRef.current.style.width = '0';
+            selectionBoxRef.current.style.height = '100%';
+            selectionBoxRef.current.style.display = 'block';
+        };
+
+        const handleMouseMove = (e) => {
+            if (!isDragging.current || !dragStartPosition.current) return;
+
+            const chartRect = chartContainerRef.current.getBoundingClientRect();
+            const currentX = e.clientX - chartRect.left;
+            const startX = dragStartPosition.current - chartRect.left;
+
+            const left = Math.min(startX, currentX);
+            const width = Math.abs(currentX - startX);
+
+            selectionBoxRef.current.style.left = `${left}px`;
+            selectionBoxRef.current.style.width = `${width}px`;
+        };
+
+        const handleMouseUp = (e) => {
+            if (!isDragging.current || !dragStartPosition.current) return;
+
+            const dragEndPosition = e.clientX;
+            const dragDistance = dragEndPosition - dragStartPosition.current;
+            const timeScale = mainChart.current.timeScale();
+            const currentRange = timeScale.getVisibleLogicalRange();
+            
+            if (Math.abs(dragDistance) > 5) {
+                // 현재 표시되는 캔들 개수 계산
+                const currentBars = Math.ceil(currentRange.to - currentRange.from);
+                
+                // 드래그 거리에 따른 변화 비율 계산 (30% ~ 50%)
+                const zoomRatio = Math.min(0.5, Math.max(0.3, Math.abs(dragDistance) / 300));
+                const changeAmount = Math.max(1, Math.floor(currentBars * zoomRatio));
+                
+                let newBars;
+                if (dragDistance < 0) {  // 오른쪽에서 왼쪽으로 드래그 = 캔들 개수 증가
+                    newBars = currentBars + changeAmount;
+                } else {  // 왼쪽에서 오른쪽으로 드래그 = 캔들 개수 감소
+                    newBars = currentBars - changeAmount;
+                    // 최소 30개 캔들 제한
+                    if (newBars < 30) {
+                        newBars = 30;
+                    }
+                }
+                
+                // 중심점 계산
+                const center = Math.floor((currentRange.from + currentRange.to) / 2);
+                
+                // 새로운 범위 계산
+                const halfBars = Math.floor(newBars / 2);
+                const newRange = {
+                    from: Math.max(0, center - halfBars),
+                    to: center + halfBars
+                };
+                
+                // 범위가 유효한지 최종 확인
+                if (newRange.to > newRange.from) {
+                    try {
+                        timeScale.setVisibleLogicalRange(newRange);
+                    } catch (error) {
+                        console.warn('Zoom operation failed:', error);
+                    }
+                }
+            }
+            
+            selectionBoxRef.current.style.display = 'none';
+            dragStartPosition.current = null;
+            isDragging.current = false;
+        };
+
+        const handleMouseLeave = () => {
+            if (isDragging.current) {
+                selectionBoxRef.current.style.display = 'none';
+                dragStartPosition.current = null;
+                isDragging.current = false;
+            }
+        };
+
+        const handleWheel = (e) => {
+            e.preventDefault();
+            const timeScale = mainChart.current.timeScale();
+            const logicalRange = timeScale.getVisibleLogicalRange();
+            const dataLength = data.length;
+            
+            // 현재 보이는 캔들 개수 계산
+            const visibleBars = logicalRange.to - logicalRange.from;
+            // 이동할 스텝 크기 (보이는 캔들의 10%)
+            const scrollStep = Math.max(1, Math.floor(visibleBars * 0.1));
+            
+            if (e.deltaY < 0) { // 스크롤 업 (과거)
+                const newRange = {
+                    from: logicalRange.from - scrollStep,
+                    to: logicalRange.to - scrollStep
+                };
+                // 왼쪽 경계 체크
+                if (newRange.from >= 0) {
+                    try {
+                        timeScale.setVisibleLogicalRange(newRange);
+                    } catch (error) {
+                        console.warn('Scroll operation failed:', error);
+                    }
+                }
+            } else { // 스크롤 다운 (최신)
+                const newRange = {
+                    from: logicalRange.from + scrollStep,
+                    to: logicalRange.to + scrollStep
+                };
+                // 오른쪽 경계 체크
+                if (newRange.to <= dataLength) {
+                    try {
+                        timeScale.setVisibleLogicalRange(newRange);
+                    } catch (error) {
+                        console.warn('Scroll operation failed:', error);
+                    }
+                }
+            }
+        };
+
+        // 이벤트 리스너 추가
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        mainChartRef.current.addEventListener('mousedown', handleMouseDown);
+        mainChartRef.current.addEventListener('mouseleave', handleMouseLeave);
+        mainChartRef.current.addEventListener('wheel', handleWheel);
+        volumeChartRef.current.addEventListener('mousedown', handleMouseDown);
+        volumeChartRef.current.addEventListener('mouseleave', handleMouseLeave);
+        volumeChartRef.current.addEventListener('wheel', handleWheel);
 
         // 이동평균선 추가 (MA가 선택된 경우에만)
         if (indicators.includes('ma')) {
@@ -345,16 +534,27 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            mainChart.current.remove();
-            volumeChart.current.remove();
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            mainChartRef.current?.removeEventListener('mousedown', handleMouseDown);
+            mainChartRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+            mainChartRef.current?.removeEventListener('wheel', handleWheel);
+            volumeChartRef.current?.removeEventListener('mousedown', handleMouseDown);
+            volumeChartRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+            volumeChartRef.current?.removeEventListener('wheel', handleWheel);
+            mainChart.current?.remove();
+            volumeChart.current?.remove();
+            
+            // 선택 영역 요소 제거
+            selectionBoxRef.current?.remove();
         };
     }, [data, indicators, indicatorSettings]);
 
     return (
-        <div className="chart-wrapper" ref={chartContainerRef}>
+        <ChartWrapper ref={chartContainerRef}>
             <div ref={mainChartRef} style={{ marginBottom: '1px' }} />
             <div ref={volumeChartRef} />
-        </div>
+        </ChartWrapper>
     );
 };
 
