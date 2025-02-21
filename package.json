@@ -1,4 +1,15 @@
 {
+  "name": "stock-chart-project",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd stock-chart-web && npm start",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd server && npm install && cd ../stock-chart-web && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
   "dependencies": {
     "axios": "^1.7.9",
     "lightweight-charts": "^5.0.2",
