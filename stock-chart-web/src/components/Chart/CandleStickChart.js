@@ -18,6 +18,43 @@ const SelectionBox = styled.div`
     z-index: 100;
 `;
 
+// 툴팁 스타일 추가
+const TooltipContainer = styled.div`
+    position: absolute;
+    z-index: 200;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: none;
+    pointer-events: none;
+    min-width: 180px;
+`;
+
+const TooltipTitle = styled.div`
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+`;
+
+const TooltipRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 2px 0;
+`;
+
+const TooltipLabel = styled.span`
+    color: #666;
+`;
+
+const TooltipValue = styled.span`
+    font-weight: 500;
+    margin-left: 10px;
+`;
+
 const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
     const mainChartRef = React.useRef();
     const volumeChartRef = React.useRef();
@@ -26,7 +63,9 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
     const chartContainerRef = React.useRef();
     const dragStartPosition = React.useRef(null);
     const selectionBoxRef = React.useRef(null);
+    const tooltipRef = React.useRef(null);
     const isDragging = React.useRef(false);
+    const lastTooltipData = React.useRef(null);
 
     React.useEffect(() => {
         if (!data || data.length === 0) return;
@@ -41,6 +80,22 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
         selectionBox.style.zIndex = '100';
         chartContainerRef.current.appendChild(selectionBox);
         selectionBoxRef.current = selectionBox;
+
+        // 툴팁 요소 생성
+        const tooltip = document.createElement('div');
+        tooltip.style.position = 'absolute';
+        tooltip.style.zIndex = '200';
+        tooltip.style.backgroundColor = 'white';
+        tooltip.style.border = '1px solid #ddd';
+        tooltip.style.borderRadius = '4px';
+        tooltip.style.padding = '8px 12px';
+        tooltip.style.fontSize = '12px';
+        tooltip.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        tooltip.style.display = 'none';
+        tooltip.style.pointerEvents = 'none';
+        tooltip.style.minWidth = '180px';
+        chartContainerRef.current.appendChild(tooltip);
+        tooltipRef.current = tooltip;
 
         // 메인 차트 생성 (가격)
         mainChart.current = createChart(mainChartRef.current, {
@@ -239,17 +294,20 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
         };
 
         const handleMouseMove = (e) => {
-            if (!isDragging.current || !dragStartPosition.current) return;
+            if (isDragging.current && dragStartPosition.current) {
+                const chartRect = chartContainerRef.current.getBoundingClientRect();
+                const currentX = e.clientX - chartRect.left;
+                const startX = dragStartPosition.current - chartRect.left;
 
-            const chartRect = chartContainerRef.current.getBoundingClientRect();
-            const currentX = e.clientX - chartRect.left;
-            const startX = dragStartPosition.current - chartRect.left;
+                const left = Math.min(startX, currentX);
+                const width = Math.abs(currentX - startX);
 
-            const left = Math.min(startX, currentX);
-            const width = Math.abs(currentX - startX);
-
-            selectionBoxRef.current.style.left = `${left}px`;
-            selectionBoxRef.current.style.width = `${width}px`;
+                selectionBoxRef.current.style.left = `${left}px`;
+                selectionBoxRef.current.style.width = `${width}px`;
+                
+                // 드래그 중에는 툴팁 숨기기
+                tooltipRef.current.style.display = 'none';
+            }
         };
 
         const handleMouseUp = (e) => {
@@ -310,6 +368,8 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                 dragStartPosition.current = null;
                 isDragging.current = false;
             }
+            // 마우스가 차트를 벗어나면 툴팁 숨기기
+            tooltipRef.current.style.display = 'none';
         };
 
         const handleWheel = (e) => {
@@ -351,6 +411,105 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                 }
             }
         };
+
+        // 캔들 데이터 툴팁 표시 함수
+        const updateTooltip = (param) => {
+            if (!param.time || isDragging.current) {
+                tooltipRef.current.style.display = 'none';
+                return;
+            }
+
+            const candleData = data.find(d => d.time === param.time);
+            if (!candleData) {
+                tooltipRef.current.style.display = 'none';
+                return;
+            }
+
+            lastTooltipData.current = candleData;
+
+            // 날짜 형식 변환 (YYYY.MM.DD 형식)
+            let dateStr = param.time;
+            if (typeof param.time === 'object' && param.time.year) {
+                dateStr = `${param.time.year}.${String(param.time.month).padStart(2, '0')}.${String(param.time.day).padStart(2, '0')}`;
+            } else if (typeof param.time === 'number') {
+                const date = new Date(param.time * 1000);
+                dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+            }
+
+            // 거래대금 계산 (거래량 * 종가)
+            const tradingValue = (candleData.volume * candleData.close).toLocaleString();
+            
+            // 툴팁 내용 업데이트
+            tooltipRef.current.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    ${dateStr}(${getDayOfWeek(param.time)})
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+                    <span style="color: #666;">시가</span>
+                    <span style="font-weight: 500; margin-left: 10px;">${candleData.open.toLocaleString()}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+                    <span style="color: #666;">고가</span>
+                    <span style="font-weight: 500; margin-left: 10px;">${candleData.high.toLocaleString()}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+                    <span style="color: #666;">저가</span>
+                    <span style="font-weight: 500; margin-left: 10px;">${candleData.low.toLocaleString()}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+                    <span style="color: #666;">종가</span>
+                    <span style="font-weight: 500; margin-left: 10px;">${candleData.close.toLocaleString()}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+                    <span style="color: #666;">거래량</span>
+                    <span style="font-weight: 500; margin-left: 10px;">${candleData.volume.toLocaleString()}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+                    <span style="color: #666;">거래대금</span>
+                    <span style="font-weight: 500; margin-left: 10px;">${tradingValue}</span>
+                </div>
+            `;
+
+            // 툴팁 위치 설정
+            const chartRect = chartContainerRef.current.getBoundingClientRect();
+            const tooltipRect = tooltipRef.current.getBoundingClientRect();
+            
+            // 마우스 위치에 따라 툴팁 위치 조정
+            let left = param.point.x + 10;
+            if (left + tooltipRect.width > chartRect.width) {
+                left = param.point.x - tooltipRect.width - 10;
+            }
+            
+            let top = param.point.y - tooltipRect.height - 10;
+            if (top < 0) {
+                top = param.point.y + 10;
+            }
+            
+            tooltipRef.current.style.left = `${left}px`;
+            tooltipRef.current.style.top = `${top}px`;
+            tooltipRef.current.style.display = 'block';
+        };
+
+        // 요일 구하기 함수
+        const getDayOfWeek = (time) => {
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            let date;
+            
+            if (typeof time === 'object' && time.year) {
+                date = new Date(time.year, time.month - 1, time.day);
+            } else if (typeof time === 'number') {
+                date = new Date(time * 1000);
+            } else {
+                return '';
+            }
+            
+            return days[date.getDay()];
+        };
+
+        // 크로스헤어 이벤트 구독
+        mainChart.current.subscribeCrosshairMove(param => {
+            updateTooltip(param);
+        });
 
         // 이벤트 리스너 추가
         document.addEventListener('mousemove', handleMouseMove);
@@ -547,6 +706,8 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
             
             // 선택 영역 요소 제거
             selectionBoxRef.current?.remove();
+            // 툴팁 요소 제거
+            tooltipRef.current?.remove();
         };
     }, [data, indicators, indicatorSettings]);
 
