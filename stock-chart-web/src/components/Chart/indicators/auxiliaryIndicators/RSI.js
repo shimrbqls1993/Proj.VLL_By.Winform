@@ -1,5 +1,15 @@
 import React from 'react';
 import { calculateRSI } from '../../utils/indicatorCalculations';
+import { 
+  SettingsContainer, 
+  SettingTitle, 
+  SettingRow, 
+  SettingLabel, 
+  SettingInput,
+  SettingCheckbox,
+  SettingButton,
+  ButtonGroup
+} from '../styles';
 
 /**
  * RSI(Relative Strength Index) 지표
@@ -14,6 +24,8 @@ const RSI = {
   
   // 설정 UI 컴포넌트
   SettingsComponent: ({ settings, onSettingsChange }) => {
+    const [activeTab, setActiveTab] = React.useState('variables');
+    
     const handleSettingChange = (field, value) => {
       onSettingsChange({
         ...settings,
@@ -22,43 +34,75 @@ const RSI = {
     };
 
     return (
-      <div className="rsi-settings">
-        <div className="setting-group">
-          <label>
-            기간:
-            <input
-              type="number"
-              value={settings.period}
-              onChange={(e) => handleSettingChange('period', e.target.value)}
-              min="1"
-            />
-          </label>
+      <SettingsContainer>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
+          <button 
+            className="reset-button"
+            onClick={() => onSettingsChange({...RSI.defaultSettings})}
+            style={{ padding: '5px 10px', background: 'none', border: 'none', color: '#666', fontSize: '12px', cursor: 'pointer' }}
+          >
+            초기화
+          </button>
         </div>
-        <div className="setting-group">
-          <label>
-            과매수 수준:
-            <input
-              type="number"
-              value={settings.overbought}
-              onChange={(e) => handleSettingChange('overbought', e.target.value)}
-              min="50"
-              max="100"
-            />
-          </label>
+        
+        {/* 탭 선택 버튼 */}
+        <div style={{ display: 'flex', borderBottom: '1px solid #ddd', marginBottom: '15px' }}>
+          <button
+            onClick={() => setActiveTab('variables')}
+            style={{
+              flex: 1,
+              padding: '8px 0',
+              background: activeTab === 'variables' ? '#f5f5f5' : 'transparent',
+              border: 'none',
+              borderBottom: activeTab === 'variables' ? '2px solid #2962FF' : 'none',
+              cursor: 'pointer',
+              fontWeight: activeTab === 'variables' ? 'bold' : 'normal',
+            }}
+          >
+            변수
+          </button>
         </div>
-        <div className="setting-group">
-          <label>
-            과매도 수준:
-            <input
-              type="number"
-              value={settings.oversold}
-              onChange={(e) => handleSettingChange('oversold', e.target.value)}
-              min="0"
-              max="50"
-            />
-          </label>
-        </div>
-      </div>
+        
+        {/* 변수 탭 */}
+        {activeTab === 'variables' && (
+          <>
+            <SettingRow>
+              <SettingLabel>기간</SettingLabel>
+              <SettingInput
+                type="number"
+                value={settings.period}
+                onChange={(e) => handleSettingChange('period', e.target.value)}
+                min="1"
+                style={{ textAlign: 'left', width: '60px' }}
+              />
+            </SettingRow>
+            
+            <SettingRow>
+              <SettingLabel>과매수 수준</SettingLabel>
+              <SettingInput
+                type="number"
+                value={settings.overbought}
+                onChange={(e) => handleSettingChange('overbought', e.target.value)}
+                min="50"
+                max="100"
+                style={{ textAlign: 'left', width: '60px' }}
+              />
+            </SettingRow>
+            
+            <SettingRow>
+              <SettingLabel>과매도 수준</SettingLabel>
+              <SettingInput
+                type="number"
+                value={settings.oversold}
+                onChange={(e) => handleSettingChange('oversold', e.target.value)}
+                min="0"
+                max="50"
+                style={{ textAlign: 'left', width: '60px' }}
+              />
+            </SettingRow>
+          </>
+        )}
+      </SettingsContainer>
     );
   },
   

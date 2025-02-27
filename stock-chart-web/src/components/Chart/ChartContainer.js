@@ -3,7 +3,17 @@ import CandleStickChart from './CandleStickChart';
 import TimeFrameSelector from './TimeFrameSelector';
 import IndicatorSidebar from './IndicatorSidebar';
 import Loading from '../Common/Loading';
-import { MA, MACD, RSI } from './indicators';
+import { 
+    MA, 
+    MACD, 
+    RSI, 
+    BollingerBands, 
+    ParabolicSAR, 
+    Envelope, 
+    PivotPoints, 
+    PriceChannel, 
+    Stochastic 
+} from './indicators';
 
 const ChartContainer = ({ code }) => {
     const [timeFrame, setTimeFrame] = useState('DAY');
@@ -15,7 +25,14 @@ const ChartContainer = ({ code }) => {
     const [indicatorSettings, setIndicatorSettings] = useState({
         ma: MA.defaultSettings,
         macd: MACD.defaultSettings,
-        rsi: RSI.defaultSettings
+        rsi: RSI.defaultSettings,
+        // 새로 추가한 지표들의 기본 설정
+        bollinger: BollingerBands.defaultSettings,
+        parabolicSAR: ParabolicSAR.defaultSettings,
+        envelope: Envelope.defaultSettings,
+        pivotPoints: PivotPoints.defaultSettings,
+        priceChannel: PriceChannel.defaultSettings,
+        stochastic: Stochastic.defaultSettings
     });
 
     const handleIndicatorSelect = (indicatorId) => {
@@ -27,6 +44,7 @@ const ChartContainer = ({ code }) => {
     };
 
     const handleUpdateSettings = (indicatorId, settings) => {
+        console.log(`지표 설정 업데이트: ${indicatorId}`, settings);
         setIndicatorSettings(prev => ({
             ...prev,
             [indicatorId]: settings
@@ -69,7 +87,7 @@ const ChartContainer = ({ code }) => {
                 />
                 <button 
                     className="timeframe-button indicator-button"
-                    onClick={() => setIsIndicatorSidebarOpen(true)}
+                    onClick={() => setIsIndicatorSidebarOpen(prev => !prev)}
                 >
                     지표
                 </button>
@@ -86,6 +104,7 @@ const ChartContainer = ({ code }) => {
                 onSelectIndicator={handleIndicatorSelect}
                 selectedIndicators={selectedIndicators}
                 onUpdateSettings={handleUpdateSettings}
+                indicatorSettings={indicatorSettings}
             />
         </div>
     );

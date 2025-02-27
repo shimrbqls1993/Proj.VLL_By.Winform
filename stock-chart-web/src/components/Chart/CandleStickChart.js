@@ -1,7 +1,18 @@
 import React from 'react';
 import { createChart } from 'lightweight-charts';
 import styled from 'styled-components';
-import { MA, Volume, MACD, RSI } from './indicators';
+import { 
+    MA, 
+    Volume, 
+    MACD, 
+    RSI, 
+    BollingerBands, 
+    ParabolicSAR, 
+    Envelope, 
+    PivotPoints, 
+    PriceChannel, 
+    Stochastic 
+} from './indicators';
 
 const ChartWrapper = styled.div`
     position: relative;
@@ -518,6 +529,31 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
             indicatorSeries.current.ma = MA.addToChart(mainChart.current, data, indicatorSettings.ma);
         }
 
+        // 볼린저 밴드 추가 (bollinger가 선택된 경우에만)
+        if (indicators.includes('bollinger')) {
+            indicatorSeries.current.bollinger = BollingerBands.addToChart(mainChart.current, data, indicatorSettings.bollinger);
+        }
+
+        // 파라볼릭 SAR 추가 (parabolicSAR가 선택된 경우에만)
+        if (indicators.includes('parabolicSAR')) {
+            indicatorSeries.current.parabolicSAR = ParabolicSAR.addToChart(mainChart.current, data, indicatorSettings.parabolicSAR);
+        }
+
+        // 엔벨로프 추가 (envelope가 선택된 경우에만)
+        if (indicators.includes('envelope')) {
+            indicatorSeries.current.envelope = Envelope.addToChart(mainChart.current, data, indicatorSettings.envelope);
+        }
+
+        // 피봇 포인트 추가 (pivotPoints가 선택된 경우에만)
+        if (indicators.includes('pivotPoints')) {
+            indicatorSeries.current.pivotPoints = PivotPoints.addToChart(mainChart.current, data, indicatorSettings.pivotPoints);
+        }
+
+        // 가격 채널 추가 (priceChannel이 선택된 경우에만)
+        if (indicators.includes('priceChannel')) {
+            indicatorSeries.current.priceChannel = PriceChannel.addToChart(mainChart.current, data, indicatorSettings.priceChannel);
+        }
+
         // MACD 계산 및 추가 (MACD가 선택된 경우에만)
         if (indicators.includes('macd')) {
             indicatorSeries.current.macd = MACD.addToChart(mainChart.current, data, indicatorSettings.macd);
@@ -526,6 +562,11 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
         // RSI 계산 및 추가 (RSI가 선택된 경우에만)
         if (indicators.includes('rsi')) {
             indicatorSeries.current.rsi = RSI.addToChart(mainChart.current, data, indicatorSettings.rsi);
+        }
+
+        // 스토캐스틱 추가 (stochastic이 선택된 경우에만)
+        if (indicators.includes('stochastic')) {
+            indicatorSeries.current.stochastic = Stochastic.addToChart(mainChart.current, data, indicatorSettings.stochastic);
         }
 
         const handleResize = () => {
@@ -572,6 +613,46 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                 }
                 
                 try {
+                    if (indicatorSeries.current.bollinger && mainChart.current) {
+                        BollingerBands.removeFromChart(mainChart.current, indicatorSeries.current.bollinger);
+                    }
+                } catch (error) {
+                    console.warn('볼린저 밴드 시리즈 제거 오류:', error);
+                }
+                
+                try {
+                    if (indicatorSeries.current.parabolicSAR && mainChart.current) {
+                        ParabolicSAR.removeFromChart(mainChart.current, indicatorSeries.current.parabolicSAR);
+                    }
+                } catch (error) {
+                    console.warn('파라볼릭 SAR 시리즈 제거 오류:', error);
+                }
+                
+                try {
+                    if (indicatorSeries.current.envelope && mainChart.current) {
+                        Envelope.removeFromChart(mainChart.current, indicatorSeries.current.envelope);
+                    }
+                } catch (error) {
+                    console.warn('엔벨로프 시리즈 제거 오류:', error);
+                }
+                
+                try {
+                    if (indicatorSeries.current.pivotPoints && mainChart.current) {
+                        PivotPoints.removeFromChart(mainChart.current, indicatorSeries.current.pivotPoints);
+                    }
+                } catch (error) {
+                    console.warn('피봇 포인트 시리즈 제거 오류:', error);
+                }
+                
+                try {
+                    if (indicatorSeries.current.priceChannel && mainChart.current) {
+                        PriceChannel.removeFromChart(mainChart.current, indicatorSeries.current.priceChannel);
+                    }
+                } catch (error) {
+                    console.warn('가격 채널 시리즈 제거 오류:', error);
+                }
+                
+                try {
                     if (indicatorSeries.current.macd && mainChart.current) {
                         MACD.removeFromChart(mainChart.current, indicatorSeries.current.macd);
                     }
@@ -585,6 +666,14 @@ const CandleStickChart = ({ data, code, indicators, indicatorSettings }) => {
                     }
                 } catch (error) {
                     console.warn('RSI 시리즈 제거 오류:', error);
+                }
+                
+                try {
+                    if (indicatorSeries.current.stochastic && mainChart.current) {
+                        Stochastic.removeFromChart(mainChart.current, indicatorSeries.current.stochastic);
+                    }
+                } catch (error) {
+                    console.warn('스토캐스틱 시리즈 제거 오류:', error);
                 }
                 
                 // 차트 제거
