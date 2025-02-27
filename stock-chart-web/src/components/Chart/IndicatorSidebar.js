@@ -1,40 +1,10 @@
 import React, { useState } from 'react';
+import { indicatorsList, categorizedIndicators, MA } from './indicators';
 
 const IndicatorSidebar = ({ isOpen, onClose, onSelectIndicator, selectedIndicators, onUpdateSettings }) => {
     const [showSettings, setShowSettings] = useState(false);
     const [selectedIndicator, setSelectedIndicator] = useState(null);
-    const [maSettings, setMaSettings] = useState({
-        weightType: 'simple', // 'simple', 'weighted', 'exponential'
-        ma5: { period: 5, enabled: true },
-        ma10: { period: 10, enabled: true },
-        ma20: { period: 20, enabled: true },
-        ma60: { period: 60, enabled: true },
-        ma120: { period: 120, enabled: false }
-    });
-
-    const indicators = [
-        { 
-            id: 'ma', 
-            name: '이동평균선', 
-            category: '차트지표',
-            hasSettings: true,
-            settings: maSettings
-        },
-        { id: 'volume', name: '거래량', category: '보조지표' },
-        { id: 'macd', name: 'MACD', category: '보조지표' },
-        { id: 'rsi', name: 'RSI', category: '보조지표' },
-        { id: 'stochastic', name: 'Stochastic', category: '보조지표' },
-        { id: 'bollinger', name: '볼린저밴드', category: '차트지표' },
-        { id: 'parabolicSAR', name: 'Parabolic SAR', category: '차트지표' },
-        { id: 'envelope', name: 'Envelope', category: '차트지표' },
-        { id: 'pivotPoints', name: 'Pivot Points', category: '차트지표' },
-        { id: 'priceChannel', name: 'Price Channel', category: '차트지표' }
-    ];
-
-    const categories = {
-        '차트지표': indicators.filter(i => i.category === '차트지표'),
-        '보조지표': indicators.filter(i => i.category === '보조지표'),
-    };
+    const [maSettings, setMaSettings] = useState(MA.defaultSettings);
 
     const handleIndicatorClick = (indicator) => {
         onSelectIndicator(indicator.id);
@@ -79,7 +49,7 @@ const IndicatorSidebar = ({ isOpen, onClose, onSelectIndicator, selectedIndicato
                 <input type="text" placeholder="지표명 검색" />
             </div>
             <div className="indicator-list">
-                {Object.entries(categories).map(([category, items]) => (
+                {Object.entries(categorizedIndicators).map(([category, items]) => (
                     <div key={category} className="indicator-category">
                         <h4>{category}</h4>
                         {items.map(indicator => (

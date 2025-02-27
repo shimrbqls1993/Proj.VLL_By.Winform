@@ -3,6 +3,7 @@ import CandleStickChart from './CandleStickChart';
 import TimeFrameSelector from './TimeFrameSelector';
 import IndicatorSidebar from './IndicatorSidebar';
 import Loading from '../Common/Loading';
+import { MA, MACD, RSI } from './indicators';
 
 const ChartContainer = ({ code }) => {
     const [timeFrame, setTimeFrame] = useState('DAY');
@@ -12,13 +13,9 @@ const ChartContainer = ({ code }) => {
     const [isIndicatorSidebarOpen, setIsIndicatorSidebarOpen] = useState(false);
     const [selectedIndicators, setSelectedIndicators] = useState(['volume']); // 기본적으로 거래량 표시
     const [indicatorSettings, setIndicatorSettings] = useState({
-        ma: {
-            ma5: { period: 5, enabled: true },
-            ma10: { period: 10, enabled: true },
-            ma20: { period: 20, enabled: true },
-            ma60: { period: 60, enabled: true },
-            ma120: { period: 120, enabled: false }
-        }
+        ma: MA.defaultSettings,
+        macd: MACD.defaultSettings,
+        rsi: RSI.defaultSettings
     });
 
     const handleIndicatorSelect = (indicatorId) => {
