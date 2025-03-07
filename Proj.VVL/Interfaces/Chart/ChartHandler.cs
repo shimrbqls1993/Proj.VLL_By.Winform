@@ -100,9 +100,9 @@ namespace Proj.VVL.Interfaces.Chart
             return -1;
         }
         /// <summary>
-        /// 조금 더 채널 형태로 깍아내기 필요하다.
+        /// 임펄스 확인 가능한 로직으로 생각됨
         /// </summary>
-        private void movingAverTest()
+        private void movingAverImpulse()
         {
             allCandleDatas.MOVING_AVR.DAY = CalcMovingAverage.Result(allCandleDatas.DAY, 1);
 
@@ -164,9 +164,84 @@ namespace Proj.VVL.Interfaces.Chart
             savedCandleStickData.ReWriteCandleData(allCandleDatas);
         }
 
+        private void movingAverTest(ref CANDLE_STICK_DEF[] longTimeFrame, ref MOVING_AVR_PROPERTIES longTimeFrameMA, ref CANDLE_STICK_DEF[] shortTimeFrame)
+        {
+            longTimeFrameMA = CalcMovingAverage.Result(longTimeFrame, 1);
+
+            int startBuff = 0;
+            int endBuff = 0;
+
+            for (int i = 0; i < longTimeFrameMA.HighPrices.Length; i++)
+            {
+                startBuff = 0;
+                endBuff = -1;
+                DateTime n0LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i], true);
+                DateTime n1LongTimeFrame;
+                if (i == longTimeFrameMA.HighPrices.Length - 1)
+                {
+                    n1LongTimeFrame = n0LongTimeFrame + TimeSpan.FromDays(14);
+                }
+                else
+                {
+                    n1LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i + 1], true);
+                }
+
+                for (int j = 0; j < shortTimeFrame.Length; j++)
+                {
+                    DateTime dtShortTimeFrame = CommonFunc.ParseString2DateTime(shortTimeFrame[j].Datetime, true);
+                    if (n0LongTimeFrame <= dtShortTimeFrame && n1LongTimeFrame > dtShortTimeFrame)
+                    {
+                        if (startBuff == 0 && endBuff == -1)
+                        {
+                            startBuff = j;
+                            endBuff = j;
+                        }
+                        else
+                        {
+                            endBuff++;
+                        }
+                    }
+                }
+                double dtBuff = endBuff - startBuff;
+                if (dtBuff == 0)
+                {
+                    shortTimeFrame[startBuff].ShowMovingAvrHigh = longTimeFrameMA.HighPrices[i];
+                    shortTimeFrame[startBuff].ShowMovingAvrLow = longTimeFrameMA.LowPrices[i];
+                }
+                else if (dtBuff > 0)
+                {
+                    double dtHPrice = longTimeFrameMA.HighPrices[i];
+                    double dtLPrice = longTimeFrameMA.LowPrices[i];
+                    if (i != (longTimeFrameMA.HighPrices.Length - 1))
+                    {
+                        dtHPrice = (longTimeFrameMA.HighPrices[i + 1] - longTimeFrameMA.HighPrices[i]) / (dtBuff + 1);
+                        dtLPrice = (longTimeFrameMA.LowPrices[i + 1] - longTimeFrameMA.LowPrices[i]) / (dtBuff + 1);
+                    }
+                    else
+                    {
+                        dtHPrice = 0;
+                        dtLPrice = 0;
+                    }
+                    for (int j = 0; j <= dtBuff; j++)
+                    {
+                        shortTimeFrame[startBuff + j].ShowMovingAvrHigh = longTimeFrameMA.HighPrices[i] + (dtHPrice * j);
+                        shortTimeFrame[startBuff + j].ShowMovingAvrLow = longTimeFrameMA.LowPrices[i] + (dtLPrice * j);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("구조가 이상함!!!!!");
+                }
+            }
+
+            candleStickData = shortTimeFrame;
+            //하단 채널
+            savedCandleStickData.ReWriteCandleData(allCandleDatas);
+        }
+
         public LiveChartProperties GetCandleData()
         {
-            movingAverTest();
+            movingAverTest(ref allCandleDatas.WEEK, ref allCandleDatas.MOVING_AVR.WEEK, ref allCandleDatas.DAY);
             LiveChartProperties chartProperties = new LiveChartProperties();
 
             if (candleStickData != Array.Empty<CANDLE_STICK_DEF>())

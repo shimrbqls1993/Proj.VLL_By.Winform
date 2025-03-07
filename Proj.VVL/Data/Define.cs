@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using static Proj.VVL.Model.RecommandTickerModel;
@@ -159,14 +160,20 @@ namespace Proj.VVL.Data
         /// </summary>
         /// <param name="parseStr"></param>
         /// <param name="dateTimeFormat"></param>
-        /// ShortStr2DateTimeFormat
-        /// LongStr2DateTimeFormat
+        /// Day Time frame 이상이면 true 아니면 false
         /// <param name="result"></param>
         /// <returns></returns>
-        public static DateTime ParseString2DateTime(string parseStr, string dateTimeFormat)
+        public static DateTime ParseString2DateTime(string parseStr, bool isUpperDayTimeFrame = true)
         {
+            if (isUpperDayTimeFrame)
+            {
+                return DateTime.ParseExact(parseStr, Define.ShortStr2DateTimeFormat, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                return DateTime.ParseExact(parseStr, Define.LongStr2DateTimeFormat, CultureInfo.InvariantCulture);
+            }
             //return DateTime.TryParseExact(parseStr, dateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
-            return DateTime.ParseExact(parseStr, dateTimeFormat, CultureInfo.InvariantCulture);
         }
 
         public static int CalcMovingAvr(double[] 종가s)

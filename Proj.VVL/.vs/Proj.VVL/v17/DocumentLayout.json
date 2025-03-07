@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:interfaces\\chart\\charthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\data\\define.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:data\\define.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|c:\\users\\littl\\documents\\github\\proj.vll_by.winform\\proj.vvl\\behaviors\\common\\calcindecator\\calcmovingaverage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3AA96FC8-4311-4F3A-8464-C3B3688938A2}|Proj.VVL.csproj|solutionrelative:behaviors\\common\\calcindecator\\calcmovingaverage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -42,8 +46,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 180,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Define.cs",
+              "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Data\\Define.cs",
+              "RelativeDocumentMoniker": "Data\\Define.cs",
+              "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Data\\Define.cs",
+              "RelativeToolTip": "Data\\Define.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAA8wK0AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T21:58:56.03Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -52,14 +69,14 @@
               "RelativeDocumentMoniker": "Interfaces\\Chart\\ChartHandler.cs",
               "ToolTip": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\Chart\\ChartHandler.cs",
               "RelativeToolTip": "Interfaces\\Chart\\ChartHandler.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAgwHAAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAQwPUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T06:11:30.583Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CandleSticks.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\DataInventoryHandlers\\CandleSticks.cs",
               "RelativeDocumentMoniker": "Interfaces\\DataInventoryHandlers\\CandleSticks.cs",
@@ -71,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "JsonHandler.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\DataInventoryHandlers\\JsonHandler.cs",
               "RelativeDocumentMoniker": "Interfaces\\DataInventoryHandlers\\JsonHandler.cs",
@@ -83,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "RealTimeQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomHandlers\\RealTimeQueryHandler.cs",
               "RelativeDocumentMoniker": "Interfaces\\KiwoomHandlers\\RealTimeQueryHandler.cs",
@@ -101,7 +118,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CalcMovingAverage.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Behaviors\\Common\\CalcIndecator\\CalcMovingAverage.cs",
               "RelativeDocumentMoniker": "Behaviors\\Common\\CalcIndecator\\CalcMovingAverage.cs",
@@ -114,7 +131,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ReceiveDataHandlerDef.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomOcx\\ReceiveDataHandlerDef.cs",
               "RelativeDocumentMoniker": "Interfaces\\KiwoomOcx\\ReceiveDataHandlerDef.cs",
@@ -126,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ReceiveTrDataHandler.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomHandlers\\ReceiveTrDataHandler.cs",
               "RelativeDocumentMoniker": "Interfaces\\KiwoomHandlers\\ReceiveTrDataHandler.cs",
@@ -138,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "QueryFuncDef.cs",
               "DocumentMoniker": "C:\\Users\\littl\\Documents\\GitHub\\Proj.VLL_By.Winform\\Proj.VVL\\Interfaces\\KiwoomOcx\\QueryFuncDef.cs",
               "RelativeDocumentMoniker": "Interfaces\\KiwoomOcx\\QueryFuncDef.cs",
