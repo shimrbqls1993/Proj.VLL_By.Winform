@@ -27,12 +27,18 @@ namespace Proj.VVL.Interfaces.KiwoomHandlers
         {
             ERROR_CODE_DEF result = ERROR_CODE_DEF.FULL_TR_SEND;
 
-            mut.WaitOne();
+            TR_CNT++;
+            
             if (TR_CNT < MAX_TR_CNT)
             {
                 result = func();
             }
-            mut.ReleaseMutex();
+            else
+            {
+                mut.WaitOne();
+                result = func();
+                mut.ReleaseMutex();
+            }
 
             return result;
         }

@@ -68,11 +68,11 @@ namespace Proj.VVL
 
         private void ServicesStop()
         {
-            if(KiwoomServices != null)
+            if (KiwoomServices != null)
             {
                 KiwoomServices.ServiceStop();
             }
-            if(commonServices != null)
+            if (commonServices != null)
             {
                 commonServices.Stop();
             }
@@ -98,7 +98,7 @@ namespace Proj.VVL
             Label_LoginStatus.DataBindings.Add(new Binding(nameof(Label_LoginStatus.ForeColor), loginViewModelBindingSource, nameof(viewModel.ForeColor), true, DataSourceUpdateMode.OnPropertyChanged));
             loginToolStripMenuItem.DataBindings.Add(new Binding(nameof(loginToolStripMenuItem.Command), loginViewModelBindingSource, nameof(viewModel.LoginCommand), true, DataSourceUpdateMode.OnPropertyChanged));
             dataGridViewPublishing_Init();
-            
+
         }
 
         private void Form_Closing(object sender, EventArgs e)
@@ -142,7 +142,8 @@ namespace Proj.VVL
         private void button2_Click(object sender, EventArgs e)
         {
             Subscriber subTest = new Subscriber();
-            subTest.GetKiwoomCandleData("000660", DateTime.Now);
+            //subTest.GetKiwoomCandleData("000660", DateTime.Now);
+            subTest.GetRealTimeData("000660");
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -153,6 +154,11 @@ namespace Proj.VVL
             ChartViewer.XAxes = liveChartProperties.xAxes;
             ChartViewer.YAxes = liveChartProperties.yAxes;
             ChartViewer.ZoomMode = LiveChartsCore.Measure.ZoomAndPanMode.X;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            RealTimeQueryHandler handle = new RealTimeQueryHandler();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Proj.VVL.Model.RecommandTickerModel;
 
 namespace Proj.VVL.Interfaces.DataInventoryHandlers
@@ -45,6 +46,40 @@ namespace Proj.VVL.Interfaces.DataInventoryHandlers
             }
         }
 
+        public void ReWriteCandleData(CANDLE_STICK_DEF[] data, CANDLE_TIME_FRAME_DEF timeFrame)
+        {
+            CANDLE_DATA_DEF storeData = GetCandleDatasFromFile();
+            switch (timeFrame)
+            {
+                case CANDLE_TIME_FRAME_DEF.WEEK:
+                    storeData.WEEK = data;
+                    break;
+                case CANDLE_TIME_FRAME_DEF.DAY:
+                    storeData.DAY = data;
+                    break;
+                case CANDLE_TIME_FRAME_DEF.HOUR:
+                    storeData.HOUR = data;
+                    break;
+                case CANDLE_TIME_FRAME_DEF.MIN_5:
+                    storeData.MIN_5 = data;
+                    break;
+                case CANDLE_TIME_FRAME_DEF.MIN_1:
+                    storeData.MIN_1 = data;
+                    break;
+            }
+            jHandle.WriteJsonToFile(storeData, FilePath);
+        }
+
+        public void ReWriteCandleData(CANDLE_DATA_DEF data)
+        {
+            jHandle.WriteJsonToFile(data, FilePath);
+        }
+
+        /// <summary>
+        /// 특정 개수 이상이면 없애기로 함
+        /// </summary>
+        /// <param name="newCandleDatas"></param>
+        /// <param name="timeFrame"></param>
         public void AddChartCandleStick(CANDLE_STICK_DEF[] newCandleDatas, CANDLE_TIME_FRAME_DEF timeFrame)
         {
             int newCandleDataIndex = 0;

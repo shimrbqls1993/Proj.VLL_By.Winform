@@ -75,50 +75,5 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         {
             return (ERROR_CODE_DEF)OcxObject.CommKwRqData(조회종목리스트, 0, 종목코드개수, (int)타입, 사용자구분명, 화면번호);
         }
-
-        public void RegistOnReceiveTrData(object sender, _DKHOpenAPIEvents_OnReceiveTrDataEvent e)
-        {
-            switch (e.sRQName)
-            {
-                case nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청):
-                    break;
-            }
-            /*
-            int i = 0;
-            if(e.sRQName == nameof(KIWOOM_OPT_TR_CODE_DEF.주식일봉차트조회요청))
-            {
-                string strData = GetCommData(e.sTrCode, e.sRQName, i, "종목코드");
-                Debug.WriteLine(strData);
-                strData = GetCommData("OPT10001", "RQName", i, "종목명");
-                Debug.WriteLine(strData);
-                strData = GetCommData("OPT10001", "RQName", i, "액면가");
-                Debug.WriteLine(strData);
-                strData = GetCommData("OPT10001", "RQName", i, "상장주식");
-                Debug.WriteLine(strData);
-            }
-            */
-        }
-
-        /// <summary>
-        /// 실시간시세 데이터가 수신될때마다 종목단위로 발생됩니다.
-        /// SetRealReg()함수로 등록한 실시간 데이터도 이 이벤트로 전달됩니다.
-        /// GetCommRealData()함수를 이용해서 수신된 데이터를 얻을수 있습니다.
-        /// 
-        /// </summary>
-        /// <param name="func"></param>
-        public void RegistOnReceiveRealData(object sender, _DKHOpenAPIEvents_OnReceiveRealDataEvent e)
-        {
-            Debug.WriteLine(e.sRealData);
-            Debug.WriteLine(e.sRealKey);
-            Debug.WriteLine(e.sRealType);
-            /*
-            string result = string.Empty;
-            foreach(실시간FID fid in Define.FID주식호가잔량)
-            {
-                result = OcxObject.GetCommRealData(e.sRealKey, (int)fid);
-                Debug.WriteLine($"{fid} : {result}");
-            }
-            */
-        }
     }
 }

@@ -44,10 +44,12 @@ namespace Proj.VVL.Services.Kiwoom.Managers
             ERROR_CODE_DEF result = ERROR_CODE_DEF.FULL_TR_SEND;
 
             mut.WaitOne();
+            
             if (TR_CNT < MAX_TR_CNT)
             {
                 result = func;
             }
+
             mut.ReleaseMutex();
 
             return result;

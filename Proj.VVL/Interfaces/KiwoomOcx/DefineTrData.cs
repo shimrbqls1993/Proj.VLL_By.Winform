@@ -8,10 +8,10 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
 {
     public class 주식주봉차트조회요청_Input
     {
-        public string 종목코드 { get; set; }
-        public string 기준일자 { get; set; }
-        public string 끝일자 { get; set; }
-        public string 수정주가구분 { get; set; }
+        public string 종목코드 { get; set; } = string.Empty;
+        public string 기준일자 { get; set; } = string.Empty;
+        public string 끝일자 { get; set; } = string.Empty;
+        public string 수정주가구분 { get; set; } = string.Empty;
     }
 
     public enum 주식주봉차트조회요청_Output
@@ -38,9 +38,9 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
     /// 
     public class 주식분봉차트조회요청_Input
     {
-        public string 종목코드 { get; set; }
-        public string 틱범위 { get; set; }
-        public string 수정주가구분 { get; set; }
+        public string 종목코드 { get; set; } = string.Empty;
+        public string 틱범위 { get; set; } = string.Empty;
+        public string 수정주가구분 { get; set; } = string.Empty;
     }
 
     public enum 주식분봉차트조회요청_Output{
@@ -64,9 +64,9 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
     /// </summary>
     public class 주식일봉차트조회요청_Input
     {
-        public string 종목코드 { get; set; }
-        public string 기준일자 { get; set; }
-        public string 수정주가구분 { get; set; }
+        public string 종목코드 { get; set; } = string.Empty;
+        public string 기준일자 { get; set; } = string.Empty;
+        public string 수정주가구분 { get; set; } = string.Empty;
     }
 
     public enum 주식일봉차트조회요청_Output
@@ -112,7 +112,7 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         public int 현재가 { get; set; }
         public int 거래량 { get; set; }
         public int 거래대금 { get; set; }
-        public string 체결시간 { get; set; }
+        public string 체결시간 { get; set; } = string.Empty;
         public int 시가 { get; set; }
         public int 고가 { get; set; }
         public int 저가 { get; set; }

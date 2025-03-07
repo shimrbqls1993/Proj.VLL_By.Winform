@@ -97,7 +97,7 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
                 datas.Add(candleData);
             }
             CandleSticks storeData = new CandleSticks(code);
-            storeData.AddChartCandleStick(datas.ToArray(), timeFrame);
+            storeData.ReWriteCandleData(datas.ToArray(), timeFrame);
         }
 
         /// <summary>
@@ -111,19 +111,19 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
             object[,] recvDatas = (object[,])GetCommDataEx(eventHandle.sTrCode, eventHandle.sRQName);
             List<CANDLE_STICK_DEF> datas = new List<CANDLE_STICK_DEF>();
             DateTime timeTmp;
-            for (int row = 0; row < recvDatas.GetLength(0); row++)
+            for (int row = recvDatas.GetLength(0) - 1; row >= 0; row--)
             {
                 CANDLE_STICK_DEF candleData = new CANDLE_STICK_DEF();
-                candleData.Close = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.현재가]);
-                candleData.Volume = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.거래량]);
-                candleData.Open = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.시가]);
-                candleData.High = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.고가]);
-                candleData.Low = int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.저가]);
+                candleData.Close = Math.Abs(int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.현재가]));
+                candleData.Volume = Math.Abs(int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.거래량]));
+                candleData.Open = Math.Abs(int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.시가]));
+                candleData.High = Math.Abs(int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.고가]));
+                candleData.Low = Math.Abs(int.Parse((string)recvDatas[row, (int)주식분봉차트조회요청_Output.저가]));
                 candleData.Datetime = (string)recvDatas[row, (int)주식분봉차트조회요청_Output.체결시간];
                 datas.Add(candleData);
             }
             CandleSticks storeData = new CandleSticks(code);
-            storeData.AddChartCandleStick(datas.ToArray(), timeFrame);
+            storeData.ReWriteCandleData(datas.ToArray(), timeFrame);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         {
             object[,] recvDatas = (object[,])GetCommDataEx(eventHandle.sTrCode, eventHandle.sRQName);
             List<CANDLE_STICK_DEF> datas = new List<CANDLE_STICK_DEF>();
-            for (int row = 0; row < recvDatas.GetLength(0); row++)
+            for (int row = recvDatas.GetLength(0) - 1; row >= 0; row--)
             {
                 CANDLE_STICK_DEF candleData = new CANDLE_STICK_DEF();
                 candleData.Close = int.Parse((string)recvDatas[row, (int)주식주봉차트조회요청_Output.현재가]);
@@ -148,7 +148,7 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
                 datas.Add(candleData);
             }
             CandleSticks storeData = new CandleSticks(code);
-            storeData.AddChartCandleStick(datas.ToArray(), timeFrame);
+            storeData.ReWriteCandleData(datas.ToArray(), timeFrame);
         }
 
         /// <summary>
@@ -163,14 +163,14 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
             Debug.WriteLine(e.sRealData);
             Debug.WriteLine(e.sRealKey);
             Debug.WriteLine(e.sRealType);
-            /*
+            
             string result = string.Empty;
             foreach(실시간FID fid in Define.FID주식호가잔량)
             {
                 result = OcxObject.GetCommRealData(e.sRealKey, (int)fid);
                 Debug.WriteLine($"{fid} : {result}");
             }
-            */
+            
         }
     }
 }

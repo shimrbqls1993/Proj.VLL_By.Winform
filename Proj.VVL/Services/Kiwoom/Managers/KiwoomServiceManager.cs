@@ -30,6 +30,7 @@ namespace Proj.VVL.Services.Kiwoom.Managers
             loginManager.Start();
             sendTrManager.Start();
             screenNumberManager.Start();
+            recommandTickerManager.Start();
         }
 
         public void ServiceStop()
@@ -37,6 +38,7 @@ namespace Proj.VVL.Services.Kiwoom.Managers
             loginManager?.Stop();
             sendTrManager?.Stop();
             screenNumberManager?.Start();
+            recommandTickerManager?.Stop();
         }
     }
 }

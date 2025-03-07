@@ -237,6 +237,7 @@ namespace Proj.VVL.Interfaces.KiwoomOcx
         FAIL = -10,
         NONE = 0,
         FULL_TR_SEND,
+        IS_NOT_VALID_COMMAND,
     }
 
     public enum GetLoginInfo_Param_DEF

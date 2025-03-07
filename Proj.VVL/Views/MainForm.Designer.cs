@@ -357,6 +357,7 @@
             button3.TabIndex = 2;
             button3.Text = "1H";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button2
             // 

@@ -29,7 +29,7 @@ namespace Proj.VVL.Data
         public const string SHEET_NAME_K_STOCK = "Korea_Stock";
         public const string SHEET_NAME_US_STOCK = "US_STOCK";
         public const string ShortStr2DateTimeFormat = "yyyyMMdd";
-        public const string LongStr2DateTimeFormat = "yyyyMMddHHmm";
+        public const string LongStr2DateTimeFormat = "yyyyMMddHHmmss";
 
         public static bool CreateAllDirectory()
         {
@@ -81,7 +81,7 @@ namespace Proj.VVL.Data
         public CANDLE_STICK_DEF[] MIN_5 = Array.Empty<CANDLE_STICK_DEF>();
         public CANDLE_STICK_DEF[] MIN_1 = Array.Empty<CANDLE_STICK_DEF>();
         public SUPPORT_REGIST_LEVEL_DEF[] SUPPORT_REGIST_LINE = Array.Empty<SUPPORT_REGIST_LEVEL_DEF>();
-        public MOVING_AVR_DEF MOVING_AVR;
+        public MOVING_AVR_DEF MOVING_AVR = new MOVING_AVR_DEF();
         public FIBONACCI[] F_PATTERN = Array.Empty<FIBONACCI>();
         public ELLIOTT_WAVE_IMPULSE[] IMPULSE = Array.Empty<ELLIOTT_WAVE_IMPULSE>();
         public ELLIOTT_WAVE_CORRECTION[] CORRECTION = Array.Empty <ELLIOTT_WAVE_CORRECTION>();
@@ -95,9 +95,18 @@ namespace Proj.VVL.Data
 
     public class MOVING_AVR_DEF
     {
-        public int[] HOUR = Array.Empty<int>();
-        public int[] DAY = Array.Empty<int>();
-        public int[] WEEK = Array.Empty<int>();
+        public MOVING_AVR_PROPERTIES HOUR = new MOVING_AVR_PROPERTIES();
+        public MOVING_AVR_PROPERTIES DAY = new MOVING_AVR_PROPERTIES();
+        public MOVING_AVR_PROPERTIES WEEK = new MOVING_AVR_PROPERTIES();
+    }
+
+    public class MOVING_AVR_PROPERTIES
+    {
+        public double[] HighPrices = Array.Empty<double>();
+        public double[] LowPrices = Array.Empty<double>();
+        public double[] OpenPrices = Array.Empty<double>();
+        public double[] ClosePrices = Array.Empty<double>();
+        public string[] DateTime = Array.Empty<string>();
     }
 
     public class ELLIOTT_WAVE_CORRECTION
@@ -137,6 +146,10 @@ namespace Proj.VVL.Data
         public double High { get; set; }
         public double Low { get; set; }
         public double Volume { get; set; }
+        public double ShowMovingAvrClose { get; set; }
+        public double ShowMovingAvrOpen { get; set; }
+        public double ShowMovingAvrHigh { get; set; }
+        public double ShowMovingAvrLow { get; set; }
     }
 
     public class CommonFunc()
@@ -174,11 +187,26 @@ namespace Proj.VVL.Data
             Type candlePricesType = typeof(CANDLE_STICK_DEF);
             Type candleDataType = typeof(CANDLE_DATA_DEF);
 
-            FieldInfo[] pricesFields = candlePricesType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo[] pricesFields = candleDataType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-            foreach(FieldInfo priceField in pricesFields)
+            try
             {
-
+                foreach (FieldInfo priceField in pricesFields)
+                {
+                    if (candlePricesType == priceField)
+                    {
+                        object priceData = priceField.GetValue(candleData);
+                        if (priceData == null)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

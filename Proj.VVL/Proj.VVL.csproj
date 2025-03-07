@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\Abstractions\" />
     <Folder Include="Behaviors\Kiwoom\" />
     <Folder Include="Services\Kiwoom\Managers\Subscriber\" />
     <Folder Include="Views\Kiwoom\Setup\" />

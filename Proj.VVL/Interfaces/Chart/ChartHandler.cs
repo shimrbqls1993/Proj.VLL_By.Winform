@@ -14,6 +14,8 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using LiveChartsCore.Defaults;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Proj.VVL.Behaviors.Common.CalcIndecator;
+using System.Diagnostics;
 
 namespace Proj.VVL.Interfaces.Chart
 {
@@ -97,10 +99,76 @@ namespace Proj.VVL.Interfaces.Chart
             }
             return -1;
         }
+        /// <summary>
+        /// 조금 더 채널 형태로 깍아내기 필요하다.
+        /// </summary>
+        private void movingAverTest()
+        {
+            allCandleDatas.MOVING_AVR.DAY = CalcMovingAverage.Result(allCandleDatas.DAY, 1);
+
+            int startBuff = 0;
+            int endBuff = 0;
+            for(int i =0; i<allCandleDatas.MOVING_AVR.DAY.HighPrices.Length; i++)
+            {
+                startBuff = 0;
+                endBuff = 0;
+                for(int j = 0; j<allCandleDatas.HOUR.Length; j++)
+                {
+                    if (allCandleDatas.HOUR[j].Datetime.StartsWith(allCandleDatas.MOVING_AVR.DAY.DateTime[i]))
+                    {
+                        if(startBuff == 0 && endBuff == 0)
+                        {
+                            startBuff = j;
+                            endBuff = j;
+                        }
+                        else
+                        {
+                            endBuff++;
+                        }
+                    }
+                }
+                double dtBuff = endBuff - startBuff;
+                if(dtBuff == 0)
+                {
+                    allCandleDatas.HOUR[startBuff].ShowMovingAvrHigh = allCandleDatas.MOVING_AVR.DAY.HighPrices[i];
+                    allCandleDatas.HOUR[startBuff].ShowMovingAvrLow = allCandleDatas.MOVING_AVR.DAY.LowPrices[i];
+                }
+                else if(dtBuff > 0)
+                {
+                    double dtHPrice = allCandleDatas.MOVING_AVR.DAY.HighPrices[i];
+                    double dtLPrice = allCandleDatas.MOVING_AVR.DAY.LowPrices[i];
+                    if (i != (allCandleDatas.MOVING_AVR.DAY.HighPrices.Length - 1))
+                    {
+                        dtHPrice = (allCandleDatas.MOVING_AVR.DAY.HighPrices[i + 1] - allCandleDatas.MOVING_AVR.DAY.HighPrices[i]) / dtBuff;
+                        dtLPrice = (allCandleDatas.MOVING_AVR.DAY.LowPrices[i + 1] - allCandleDatas.MOVING_AVR.DAY.LowPrices[i]) / dtBuff;
+                    }
+                    else
+                    {
+                        dtHPrice = 0;
+                        dtLPrice = 0;
+                    }
+                    for(int j = 0; j<=dtBuff; j++)
+                    {
+                        allCandleDatas.HOUR[startBuff + j].ShowMovingAvrHigh = allCandleDatas.MOVING_AVR.DAY.HighPrices[i] + (dtHPrice * j);
+                        allCandleDatas.HOUR[startBuff + j].ShowMovingAvrLow = allCandleDatas.MOVING_AVR.DAY.LowPrices[i] + (dtLPrice * j);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("구조가 이상함!!!!!");
+                }
+            }
+
+            candleStickData = allCandleDatas.HOUR;
+            //하단 채널
+            savedCandleStickData.ReWriteCandleData(allCandleDatas);
+        }
 
         public LiveChartProperties GetCandleData()
         {
+            movingAverTest();
             LiveChartProperties chartProperties = new LiveChartProperties();
+
             if (candleStickData != Array.Empty<CANDLE_STICK_DEF>())
             {
                 double maxPrice = GetMaxPrice();
@@ -121,6 +189,20 @@ namespace Proj.VVL.Interfaces.Chart
                         Values = candleStickData.Select( x => new FinancialPointI(x.High,x.Open,x.Close,x.Low)).ToArray(),
                         ScalesYAt = 0,
                     },
+                    new LineSeries<double>
+                    {
+                        //Values = allCandleDatas.MOVING_AVR.WEEK.HighPrices,
+                        Values = candleStickData.Select( x => x.ShowMovingAvrHigh).ToArray(),
+                        Fill = null,
+                        GeometrySize = 0
+                    },
+                    new LineSeries<double>
+                    {
+                        //Values = allCandleDatas.MOVING_AVR.WEEK.LowPrices,
+                        Values = candleStickData.Select( x => x.ShowMovingAvrLow).ToArray(),
+                        Fill = null,
+                        GeometrySize = 0
+                    }
                 };
 
                 chartProperties.xAxes = new[]

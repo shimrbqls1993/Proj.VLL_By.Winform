@@ -15,6 +15,7 @@ namespace Proj.VVL.Interfaces.DataInventoryHandlers
 {
     public class JsonHandler : IJsonHandler
     {
+        private static readonly Dictionary<string, Mutex> fileMutexs = new Dictionary<string, Mutex>();
         public void WriteJsonToFile(CANDLE_STICK_DEF[] data, string filePath)
         {
             string jsonData = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
@@ -28,11 +29,32 @@ namespace Proj.VVL.Interfaces.DataInventoryHandlers
         public void WriteJsonToFile(CANDLE_DATA_DEF data, string filePath)
         {
             string jsonData = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            Mutex mutex = GetMutexForFilePath(filePath);
+            
+            try
+            {
+                mutex.WaitOne();
+                // 파일이 없으면 생성하고, JSON 데이터를 씀
+                File.WriteAllText(filePath, jsonData);
+            }
+            finally
+            {
+                mutex.ReleaseMutex();
+            }
+        }
 
-            // 파일이 없으면 생성하고, JSON 데이터를 씀
-            File.WriteAllText(filePath, jsonData);
-
-            Console.WriteLine("JSON 파일이 생성되었습니다.");
+        private Mutex GetMutexForFilePath(string filePath)
+        {
+            Mutex mutex;
+            lock (fileMutexs)
+            {
+                if(!fileMutexs.TryGetValue(filePath, out mutex))
+                {
+                    mutex = new Mutex();
+                    fileMutexs.Add(filePath, mutex);
+                }
+            }
+            return mutex;
         }
 
         public T ReadJsonFromFile<T>(string filePath)
