@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import SearchBar from '../SearchBar';
 
 const HeaderContainer = styled.header`
     width: 100%;
@@ -16,25 +17,14 @@ const Logo = styled.div`
     font-size: 20px;
     font-weight: bold;
     color: #ff1744;
+    margin-right: 20px;
 `;
 
-const SearchBar = styled.input`
-    margin-left: 40px;
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 300px;
-    &:focus {
-        outline: none;
-        border-color: #2962FF;
-    }
-`;
-
-const Header = () => {
+const Header = ({ onSelectStock }) => {
     return (
         <HeaderContainer>
             <Logo>Stock Chart</Logo>
-            <SearchBar placeholder="종목 검색" />
+            <SearchBar onSelectStock={onSelectStock} />
         </HeaderContainer>
     );
 };

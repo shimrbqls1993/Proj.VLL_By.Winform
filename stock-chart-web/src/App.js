@@ -32,13 +32,13 @@ function App() {
 
     return (
         <AppContainer>
-            <Header />
+            <Header onSelectStock={handleStockSelect} />
             <MainContent>
                 <WatchList onSelectStock={handleStockSelect} />
                 <ChartSection>
                     <ChartContainer code={code} />
                 </ChartSection>
-                <MarketInfo />
+                <MarketInfo code={code} />
             </MainContent>
         </AppContainer>
     );

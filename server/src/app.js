@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const candlestickRoutes = require('./routes/candlestick.routes');
+const stockRoutes = require('./routes/stock.routes');
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 // 라우트 설정
 app.use('/api/candlesticks', candlestickRoutes);
+app.use('/api/stocks', stockRoutes);
 
 // 서버 시작
 const PORT = process.env.PORT || 3001;

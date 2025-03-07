@@ -1,8 +1,14 @@
 @echo off
-cd /d %~dp0
-echo Starting Stock Chart Application...
+echo 주식 종목 리스트를 가져오는 중...
+cd scripts
+if not exist "python_embedded" (
+    echo Python Embedded not found. Running setup...
+    call setup_embedded.bat
+)
+python_embedded\python.exe stock_list.py
+cd ..
 
-start /b cmd /c "cd server && ..\node\node.exe src/app.js"
-cd stock-chart-web && ..\node\node.exe node_modules/react-scripts/scripts/start.js
+echo 웹 애플리케이션을 시작합니다...
+node start.js
 
 pause 

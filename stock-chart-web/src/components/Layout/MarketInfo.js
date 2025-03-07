@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const MarketInfoContainer = styled.div`
+const Container = styled.div`
     width: 300px;
-    height: calc(100vh - 60px);
-    background-color: #fff;
-    border-left: 1px solid #e0e0e0;
-    overflow-y: auto;
-`;
-
-const InfoSection = styled.div`
     padding: 20px;
-    border-bottom: 1px solid #e0e0e0;
+    background: white;
+    border-left: 1px solid #e0e0e0;
 `;
 
-const SectionTitle = styled.h3`
-    margin: 0 0 15px 0;
+const Section = styled.div`
+    margin-bottom: 20px;
+`;
+
+const Title = styled.h3`
     font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
     color: #333;
 `;
 
 const InfoRow = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-bottom: 8px;
 `;
 
 const Label = styled.span`
@@ -32,76 +30,115 @@ const Label = styled.span`
 `;
 
 const Value = styled.span`
-    color: #333;
-    font-weight: ${props => props.bold ? '500' : 'normal'};
+    font-weight: 500;
     color: ${props => {
-        if (props.isUp) return '#ff1744';
-        if (props.isDown) return '#1e88e5';
+        if (props.type === 'change') {
+            return props.value > 0 ? '#ff1744' : props.value < 0 ? '#1e88e5' : '#333';
+        }
         return '#333';
     }};
 `;
 
-const MarketInfo = ({ stockInfo }) => {
-    const defaultInfo = {
-        code: '005930',
-        name: '삼성전자',
-        price: 58200,
-        change: -0.34,
-        volume: 19281460,
-        marketCap: '347조 4,413억',
-        foreignOwnership: '50.04%',
-        high52: 88800,
-        low52: 49900,
-    };
+const formatNumber = (num) => {
+    if (num === undefined || num === null) return '-';
+    if (typeof num === 'number') {
+        if (num >= 100000000) {
+            return (num / 100000000).toFixed(2) + '억';
+        }
+        return num.toLocaleString();
+    }
+    return num;
+};
 
-    const info = stockInfo || defaultInfo;
+const MarketInfo = ({ code }) => {
+    const [stockInfo, setStockInfo] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchStockInfo = async () => {
+            try {
+                if (!code) return;
+                
+                // API URL 환경변수 사용
+                const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+                console.log('Fetching stock info for:', code);
+                console.log('API URL:', `${API_URL}/stocks/info/${code}`);
+                
+                const response = await fetch(`${API_URL}/stocks/info/${code}`);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to fetch stock info');
+                }
+                const data = await response.json();
+                console.log('Received stock info:', data);
+                setStockInfo(data);
+                setError(null);
+            } catch (error) {
+                console.error('Error fetching stock info:', error);
+                setError(error.message);
+                setStockInfo(null);
+            }
+        };
+
+        fetchStockInfo();
+    }, [code]);
+
+    if (error) return (
+        <Container>
+            <div style={{ color: 'red' }}>Error: {error}</div>
+        </Container>
+    );
+
+    if (!stockInfo) return (
+        <Container>
+            <div>Loading stock information...</div>
+        </Container>
+    );
 
     return (
-        <MarketInfoContainer>
-            <InfoSection>
-                <SectionTitle>종목정보</SectionTitle>
+        <Container>
+            <Section>
+                <Title>종목정보</Title>
                 <InfoRow>
                     <Label>종목코드</Label>
-                    <Value>{info.code}</Value>
+                    <Value>{stockInfo.종목코드}</Value>
                 </InfoRow>
                 <InfoRow>
                     <Label>현재가</Label>
-                    <Value isDown={info.change < 0} isUp={info.change > 0} bold>
-                        {info.price.toLocaleString()}
-                    </Value>
+                    <Value>{formatNumber(stockInfo.현재가)}</Value>
                 </InfoRow>
                 <InfoRow>
                     <Label>등락률</Label>
-                    <Value isDown={info.change < 0} isUp={info.change > 0}>
-                        {info.change > 0 ? `+${info.change}` : info.change}%
+                    <Value type="change" value={stockInfo.등락률}>
+                        {stockInfo.등락률 > 0 ? '+' : ''}{stockInfo.등락률}%
                     </Value>
                 </InfoRow>
                 <InfoRow>
                     <Label>거래량</Label>
-                    <Value>{info.volume.toLocaleString()}</Value>
+                    <Value>{formatNumber(stockInfo.거래량)}</Value>
                 </InfoRow>
-            </InfoSection>
+            </Section>
 
-            <InfoSection>
-                <SectionTitle>기업정보</SectionTitle>
+            <Section>
+                <Title>기업정보</Title>
                 <InfoRow>
                     <Label>시가총액</Label>
-                    <Value>{info.marketCap}</Value>
+                    <Value>{formatNumber(stockInfo.시가총액)}</Value>
                 </InfoRow>
                 <InfoRow>
                     <Label>외국인지분율</Label>
-                    <Value>{info.foreignOwnership}</Value>
+                    <Value>{stockInfo.외국인지분율?.toFixed(2)}%</Value>
                 </InfoRow>
                 <InfoRow>
                     <Label>52주 최고</Label>
-                    <Value>{info.high52.toLocaleString()}</Value>
+                    <Value>{formatNumber(stockInfo['52주_최고'])}</Value>
                 </InfoRow>
                 <InfoRow>
                     <Label>52주 최저</Label>
-                    <Value>{info.low52.toLocaleString()}</Value>
+                    <Value>{formatNumber(stockInfo['52주_최저'])}</Value>
                 </InfoRow>
-            </InfoSection>
-        </MarketInfoContainer>
+            </Section>
+        </Container>
     );
 };
 

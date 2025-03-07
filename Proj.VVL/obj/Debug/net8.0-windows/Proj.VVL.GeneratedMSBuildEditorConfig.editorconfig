@@ -14,6 +14,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Proj.VVL
-build_property.ProjectDir = C:\Users\littl\Documents\GitHub\Proj.VLL_By.Winform\Proj.VVL\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = e:\Proj.VLL_By.Winform-yong1\Proj.VVL\
