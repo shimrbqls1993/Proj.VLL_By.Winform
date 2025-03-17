@@ -16,6 +16,8 @@ using LiveChartsCore.Defaults;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Proj.VVL.Behaviors.Common.CalcIndecator;
 using System.Diagnostics;
+using Microsoft.ML;
+using MathNet.Numerics;
 
 namespace Proj.VVL.Interfaces.Chart
 {
@@ -102,71 +104,9 @@ namespace Proj.VVL.Interfaces.Chart
         /// <summary>
         /// 임펄스 확인 가능한 로직으로 생각됨
         /// </summary>
-        private void movingAverImpulse()
+        private void movingAverImpulse(ref CANDLE_STICK_DEF[] longTimeFrame, ref MOVING_AVR_PROPERTIES longTimeFrameMA, ref CANDLE_STICK_DEF[] shortTimeFrame)
         {
-            allCandleDatas.MOVING_AVR.DAY = CalcMovingAverage.Result(allCandleDatas.DAY, 1);
-
-            int startBuff = 0;
-            int endBuff = 0;
-            for(int i =0; i<allCandleDatas.MOVING_AVR.DAY.HighPrices.Length; i++)
-            {
-                startBuff = 0;
-                endBuff = 0;
-                for(int j = 0; j<allCandleDatas.HOUR.Length; j++)
-                {
-                    if (allCandleDatas.HOUR[j].Datetime.StartsWith(allCandleDatas.MOVING_AVR.DAY.DateTime[i]))
-                    {
-                        if(startBuff == 0 && endBuff == 0)
-                        {
-                            startBuff = j;
-                            endBuff = j;
-                        }
-                        else
-                        {
-                            endBuff++;
-                        }
-                    }
-                }
-                double dtBuff = endBuff - startBuff;
-                if(dtBuff == 0)
-                {
-                    allCandleDatas.HOUR[startBuff].ShowMovingAvrHigh = allCandleDatas.MOVING_AVR.DAY.HighPrices[i];
-                    allCandleDatas.HOUR[startBuff].ShowMovingAvrLow = allCandleDatas.MOVING_AVR.DAY.LowPrices[i];
-                }
-                else if(dtBuff > 0)
-                {
-                    double dtHPrice = allCandleDatas.MOVING_AVR.DAY.HighPrices[i];
-                    double dtLPrice = allCandleDatas.MOVING_AVR.DAY.LowPrices[i];
-                    if (i != (allCandleDatas.MOVING_AVR.DAY.HighPrices.Length - 1))
-                    {
-                        dtHPrice = (allCandleDatas.MOVING_AVR.DAY.HighPrices[i + 1] - allCandleDatas.MOVING_AVR.DAY.HighPrices[i]) / dtBuff;
-                        dtLPrice = (allCandleDatas.MOVING_AVR.DAY.LowPrices[i + 1] - allCandleDatas.MOVING_AVR.DAY.LowPrices[i]) / dtBuff;
-                    }
-                    else
-                    {
-                        dtHPrice = 0;
-                        dtLPrice = 0;
-                    }
-                    for(int j = 0; j<=dtBuff; j++)
-                    {
-                        allCandleDatas.HOUR[startBuff + j].ShowMovingAvrHigh = allCandleDatas.MOVING_AVR.DAY.HighPrices[i] + (dtHPrice * j);
-                        allCandleDatas.HOUR[startBuff + j].ShowMovingAvrLow = allCandleDatas.MOVING_AVR.DAY.LowPrices[i] + (dtLPrice * j);
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("구조가 이상함!!!!!");
-                }
-            }
-
-            candleStickData = allCandleDatas.HOUR;
-            //하단 채널
-            savedCandleStickData.ReWriteCandleData(allCandleDatas);
-        }
-
-        private void movingAverTest(ref CANDLE_STICK_DEF[] longTimeFrame, ref MOVING_AVR_PROPERTIES longTimeFrameMA, ref CANDLE_STICK_DEF[] shortTimeFrame)
-        {
-            longTimeFrameMA = CalcMovingAverage.Result(longTimeFrame, 1);
+            longTimeFrameMA = CalcMovingAverage.Result(longTimeFrame, 0);
 
             int startBuff = 0;
             int endBuff = 0;
@@ -175,7 +115,8 @@ namespace Proj.VVL.Interfaces.Chart
             {
                 startBuff = 0;
                 endBuff = -1;
-                DateTime n0LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i], true);
+                //상위 time frame과 하위 timeframe 비교가 원활하게 하기 위해 string to Datetime 변환
+                DateTime n0LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i]);
                 DateTime n1LongTimeFrame;
                 if (i == longTimeFrameMA.HighPrices.Length - 1)
                 {
@@ -183,12 +124,12 @@ namespace Proj.VVL.Interfaces.Chart
                 }
                 else
                 {
-                    n1LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i + 1], true);
+                    n1LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i + 1]);
                 }
-
+                //상위 time frame과 하위 timeframe의 비교 로직
                 for (int j = 0; j < shortTimeFrame.Length; j++)
                 {
-                    DateTime dtShortTimeFrame = CommonFunc.ParseString2DateTime(shortTimeFrame[j].Datetime, true);
+                    DateTime dtShortTimeFrame = CommonFunc.ParseString2DateTime(shortTimeFrame[j].Datetime);
                     if (n0LongTimeFrame <= dtShortTimeFrame && n1LongTimeFrame > dtShortTimeFrame)
                     {
                         if (startBuff == 0 && endBuff == -1)
@@ -202,13 +143,15 @@ namespace Proj.VVL.Interfaces.Chart
                         }
                     }
                 }
+
+                //해당되는 shorttimeframe에 데이터를 넣음
                 double dtBuff = endBuff - startBuff;
                 if (dtBuff == 0)
                 {
                     shortTimeFrame[startBuff].ShowMovingAvrHigh = longTimeFrameMA.HighPrices[i];
                     shortTimeFrame[startBuff].ShowMovingAvrLow = longTimeFrameMA.LowPrices[i];
                 }
-                else if (dtBuff > 0)
+                else if (dtBuff > 0) // 중간
                 {
                     double dtHPrice = longTimeFrameMA.HighPrices[i];
                     double dtLPrice = longTimeFrameMA.LowPrices[i];
@@ -217,7 +160,7 @@ namespace Proj.VVL.Interfaces.Chart
                         dtHPrice = (longTimeFrameMA.HighPrices[i + 1] - longTimeFrameMA.HighPrices[i]) / (dtBuff + 1);
                         dtLPrice = (longTimeFrameMA.LowPrices[i + 1] - longTimeFrameMA.LowPrices[i]) / (dtBuff + 1);
                     }
-                    else
+                    else //마지막
                     {
                         dtHPrice = 0;
                         dtLPrice = 0;
@@ -230,7 +173,7 @@ namespace Proj.VVL.Interfaces.Chart
                 }
                 else
                 {
-                    Debug.WriteLine("구조가 이상함!!!!!");
+                    Debug.WriteLine("하위 프레임에서는 해당 시간이 없음.");
                 }
             }
 
@@ -239,9 +182,96 @@ namespace Proj.VVL.Interfaces.Chart
             savedCandleStickData.ReWriteCandleData(allCandleDatas);
         }
 
+
+        private void movingAverTest(ref CANDLE_STICK_DEF[] longTimeFrame, ref MOVING_AVR_PROPERTIES longTimeFrameMA, ref CANDLE_STICK_DEF[] shortTimeFrame)
+        {
+            longTimeFrameMA = CalcMovingAverage.Result(longTimeFrame, 0);
+
+            int startBuff = 0;
+            int endBuff = 0;
+
+            for (int i = 0; i < longTimeFrameMA.HighPrices.Length; i++)
+            {
+                startBuff = 0;
+                endBuff = -1;
+                //상위 time frame과 하위 timeframe 비교가 원활하게 하기 위해 string to Datetime 변환
+                DateTime n0LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i]);
+                DateTime n1LongTimeFrame;
+                if (i == longTimeFrameMA.HighPrices.Length - 1)
+                {
+                    n1LongTimeFrame = n0LongTimeFrame + TimeSpan.FromDays(14);
+                }
+                else
+                {
+                    n1LongTimeFrame = CommonFunc.ParseString2DateTime(longTimeFrameMA.DateTime[i + 1]);
+                }
+                //상위 time frame과 하위 timeframe의 비교 로직
+                for (int j = 0; j < shortTimeFrame.Length; j++)
+                {
+                    DateTime dtShortTimeFrame = CommonFunc.ParseString2DateTime(shortTimeFrame[j].Datetime);
+                    if (n0LongTimeFrame <= dtShortTimeFrame && n1LongTimeFrame > dtShortTimeFrame)
+                    {
+                        if (startBuff == 0 && endBuff == -1)
+                        {
+                            startBuff = j;
+                            endBuff = j;
+                        }
+                        else
+                        {
+                            endBuff++;
+                        }
+                    }
+                }
+
+                //해당되는 shorttimeframe에 데이터를 넣음
+                double dtBuff = endBuff - startBuff;
+                if (dtBuff == 0)
+                {
+                    shortTimeFrame[startBuff].ShowMovingAvrHigh = longTimeFrameMA.HighPrices[i];
+                    shortTimeFrame[startBuff].ShowMovingAvrLow = longTimeFrameMA.LowPrices[i];
+                }
+                else if (dtBuff > 0) // 중간
+                {
+                    double dtHPrice = longTimeFrameMA.HighPrices[i];
+                    double dtLPrice = longTimeFrameMA.LowPrices[i];
+                    if (i != (longTimeFrameMA.HighPrices.Length - 1))
+                    {
+                        dtHPrice = (longTimeFrameMA.HighPrices[i + 1] - longTimeFrameMA.HighPrices[i]) / (dtBuff + 1);
+                        dtLPrice = (longTimeFrameMA.LowPrices[i + 1] - longTimeFrameMA.LowPrices[i]) / (dtBuff + 1);
+                    }
+                    else //마지막
+                    {
+                        dtHPrice = 0;
+                        dtLPrice = 0;
+                    }
+                    for (int j = 0; j <= dtBuff; j++)
+                    {
+                        shortTimeFrame[startBuff + j].ShowMovingAvrHigh = longTimeFrameMA.HighPrices[i] + (dtHPrice * j);
+                        shortTimeFrame[startBuff + j].ShowMovingAvrLow = longTimeFrameMA.LowPrices[i] + (dtLPrice * j);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("하위 프레임에서는 해당 시간이 없음.");
+                }
+            }
+
+            candleStickData = shortTimeFrame;
+            //하단 채널
+            savedCandleStickData.ReWriteCandleData(allCandleDatas);
+        }
+
+        private void LinearRegressionTest(ref CANDLE_STICK_DEF[] longTimeFrame)
+        {
+            CalcTrandLine tl = new CalcTrandLine();
+            tl.Test3(ref longTimeFrame);
+            candleStickData = longTimeFrame;
+        }
+        
         public LiveChartProperties GetCandleData()
         {
-            movingAverTest(ref allCandleDatas.WEEK, ref allCandleDatas.MOVING_AVR.WEEK, ref allCandleDatas.DAY);
+            //movingAverTest(ref allCandleDatas.DAY, ref allCandleDatas.MOVING_AVR.DAY, ref allCandleDatas.HOUR);
+            LinearRegressionTest(ref allCandleDatas.WEEK);
             LiveChartProperties chartProperties = new LiveChartProperties();
 
             if (candleStickData != Array.Empty<CANDLE_STICK_DEF>())
@@ -266,17 +296,17 @@ namespace Proj.VVL.Interfaces.Chart
                     },
                     new LineSeries<double>
                     {
-                        //Values = allCandleDatas.MOVING_AVR.WEEK.HighPrices,
                         Values = candleStickData.Select( x => x.ShowMovingAvrHigh).ToArray(),
                         Fill = null,
-                        GeometrySize = 0
+                        GeometrySize = 0,
+                        Stroke = new SolidColorPaint(SKColors.Red)
                     },
                     new LineSeries<double>
                     {
-                        //Values = allCandleDatas.MOVING_AVR.WEEK.LowPrices,
                         Values = candleStickData.Select( x => x.ShowMovingAvrLow).ToArray(),
                         Fill = null,
-                        GeometrySize = 0
+                        GeometrySize = 0,
+                        Stroke = new SolidColorPaint(SKColors.Blue)
                     }
                 };
 

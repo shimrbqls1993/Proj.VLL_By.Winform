@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using static Proj.VVL.Model.RecommandTickerModel;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace Proj.VVL.Data
 {
@@ -147,6 +148,7 @@ namespace Proj.VVL.Data
         public double High { get; set; }
         public double Low { get; set; }
         public double Volume { get; set; }
+        public int dtDateTime { get; set; }
         public double ShowMovingAvrClose { get; set; }
         public double ShowMovingAvrOpen { get; set; }
         public double ShowMovingAvrHigh { get; set; }
@@ -163,17 +165,23 @@ namespace Proj.VVL.Data
         /// Day Time frame 이상이면 true 아니면 false
         /// <param name="result"></param>
         /// <returns></returns>
-        public static DateTime ParseString2DateTime(string parseStr, bool isUpperDayTimeFrame = true)
+        public static DateTime ParseString2DateTime(string parseStr)
         {
-            if (isUpperDayTimeFrame)
+            if(DateTime.TryParseExact(parseStr, Define.ShortStr2DateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
             {
-                return DateTime.ParseExact(parseStr, Define.ShortStr2DateTimeFormat, CultureInfo.InvariantCulture);
+                return result;
             }
             else
             {
                 return DateTime.ParseExact(parseStr, Define.LongStr2DateTimeFormat, CultureInfo.InvariantCulture);
             }
-            //return DateTime.TryParseExact(parseStr, dateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+        }
+
+        public static double CalcPercent(double value, double percent)
+        {
+            if (percent == 0)
+                return percent;
+            return (value * (percent / 100));
         }
 
         public static int CalcMovingAvr(double[] 종가s)
