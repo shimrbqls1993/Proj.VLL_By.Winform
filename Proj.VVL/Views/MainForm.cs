@@ -1,3 +1,4 @@
+using GW_SKYBLUE_DC_WPF.Behaviors;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Geo;
@@ -37,6 +38,7 @@ namespace Proj.VVL
         public MainFormViewModel viewModel;
         public LiveChartProperties liveChartProperties;
         public CommonServiceManager commonServices;
+        public SaveDebugLogBehavior DebugLog = new SaveDebugLogBehavior();
 
         public IServiceProvider Handlers { get; }
 
@@ -148,7 +150,7 @@ namespace Proj.VVL
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            ChartHandler hChart = new ChartHandler("000660", Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.DAY);
+            ChartHandler hChart = new ChartHandler("214450", Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.HOUR);
             liveChartProperties = hChart.GetCandleData();
             ChartViewer.Series = liveChartProperties.Series;
             ChartViewer.XAxes = liveChartProperties.xAxes;

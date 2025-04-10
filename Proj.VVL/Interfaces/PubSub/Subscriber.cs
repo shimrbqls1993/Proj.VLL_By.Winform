@@ -170,7 +170,7 @@ namespace Proj.VVL.Interfaces.PubSub
         {
             RealTimeQueryHandler handle = new RealTimeQueryHandler();
 
-            handle.RegistRealData(종목코드, MainForm.Instance.KiwoomServices.screenNumberManager.Handler.GetScreenNumber().ToString());
+            //handle.RegistRealData(종목코드, MainForm.Instance.KiwoomServices.screenNumberManager.Handler.GetScreenNumber().ToString());
         }
     }
 }

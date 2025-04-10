@@ -17,7 +17,7 @@ namespace Proj.VVL.Interfaces.KiwoomHandlers
 
         public RealTimeQueryHandler()
         {
-            MainForm.KiwoomOcxObj.condition.SetRealRemove();
+            
         }
 
         public ERROR_CODE_DEF RegistRealData(string ticker, string screenNumber)
@@ -29,6 +29,11 @@ namespace Proj.VVL.Interfaces.KiwoomHandlers
             }
 
             return MainForm.KiwoomOcxObj.condition.SetRealReg(screenNumber, ticker, Define.MakeFidList2String(Define.FID주식호가잔량), "0");
+        }
+
+        public static void RemoveAllRegist()
+        {
+            MainForm.KiwoomOcxObj.condition.SetRealRemove();
         }
     }
 }

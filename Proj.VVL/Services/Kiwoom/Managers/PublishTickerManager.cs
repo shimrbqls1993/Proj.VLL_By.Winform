@@ -13,6 +13,7 @@ using Proj.VVL.Interfaces.KiwoomOcx;
 using Proj.VVL.Behaviors.Common.CalcIndecator;
 using Proj.VVL.Data;
 using Proj.VVL.Interfaces.DataInventoryHandlers;
+using GW_SKYBLUE_DC_WPF.Behaviors;
 
 namespace Proj.VVL.Services.Kiwoom.Managers
 {
@@ -41,6 +42,11 @@ namespace Proj.VVL.Services.Kiwoom.Managers
             Handler.Join(2000);
         }
 
+        /// <summary>
+        /// 이미 등록된 티커에 대해 
+        /// 새로운 티커가 등록되는지 확인
+        /// 
+        /// </summary>
         public void Main()
         {
             while (IsRunning) 
@@ -62,7 +68,7 @@ namespace Proj.VVL.Services.Kiwoom.Managers
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.Message);
+                    MainForm.Instance.DebugLog.TradingLog(e.Message);
                 }
             }
         }
@@ -92,41 +98,41 @@ namespace Proj.VVL.Services.Kiwoom.Managers
 
             if (!int.TryParse(tickerCode, out int intTickerCode))
             {
-                Debug.WriteLine("ticker code가 int형이 아닙니다." + tickerCode);
+                MainForm.Instance.DebugLog.TradingLog("ticker code가 int형이 아닙니다." + tickerCode);
                 return -1;
             }
 
             if (Ticker_ThreadId.TryGetValue(tickerCode, out int threadId))
             {
-                Debug.WriteLine($"이미 등록되어 있는 티커 입니다. {tickerCode}");
+                MainForm.Instance.DebugLog.TradingLog($"이미 등록되어 있는 티커 입니다. {tickerCode}");
                 return -1;
             }
 
             Subscriber getChartData = new Subscriber();
             if (getChartData.GetKiwoomCandleData(tickerCode, Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.WEEK) != ERROR_CODE_DEF.NONE)
             {
-                Debug.WriteLine($"Get data failed");
+                MainForm.Instance.DebugLog.TradingLog($"Get data failed");
                 return -1;
             }
             if (getChartData.GetKiwoomCandleData(tickerCode, Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.DAY) != ERROR_CODE_DEF.NONE)
             {
-                Debug.WriteLine($"Get data failed");
+                MainForm.Instance.DebugLog.TradingLog($"Get data failed");
                 return -1;
             }
             if (getChartData.GetKiwoomCandleData(tickerCode, Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.HOUR) != ERROR_CODE_DEF.NONE)
             {
-                Debug.WriteLine($"Get data failed");
+                MainForm.Instance.DebugLog.TradingLog($"Get data failed");
                 return -1;
             }
             // 생각해보자.
             if (getChartData.GetKiwoomCandleData(tickerCode, Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.MIN_5) != ERROR_CODE_DEF.NONE)
             {
-                Debug.WriteLine($"Get data failed");
+                MainForm.Instance.DebugLog.TradingLog($"Get data failed");
                 return -1;
             }
             if (getChartData.GetKiwoomCandleData(tickerCode, Interfaces.DataInventoryHandlers.CANDLE_TIME_FRAME_DEF.MIN_1) != ERROR_CODE_DEF.NONE)
             {
-                Debug.WriteLine($"Get data failed");
+                MainForm.Instance.DebugLog.TradingLog($"Get data failed");
                 return -1;
             }
 

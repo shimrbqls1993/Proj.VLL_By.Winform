@@ -261,17 +261,90 @@ namespace Proj.VVL.Interfaces.Chart
             savedCandleStickData.ReWriteCandleData(allCandleDatas);
         }
 
+        private LineSeries<double>[] DrawSupportLineTest(List<double>supportPrices, int xAxisLen)
+        {
+            List<LineSeries<double>> result = new List<LineSeries<double>>();
+            for(int i =0; i<supportPrices.Count; i++)
+            {
+                List<double> dummyValue = new List<double>();
+                for(int k =0; k<xAxisLen; k++)
+                {
+                    dummyValue.Add(supportPrices[i]);
+                }
+                result.Add(new LineSeries<double>
+                {
+                    Values = dummyValue.ToArray(),
+                    Fill = null,
+                    GeometrySize = 0,
+                    Stroke = new SolidColorPaint(SKColors.Orange)
+                });
+            }
+            return result.ToArray();
+        }
+
+        ISeries[] DrawingValuesSupportLine;
+
         private void LinearRegressionTest(ref CANDLE_STICK_DEF[] longTimeFrame)
         {
             CalcTrandLine tl = new CalcTrandLine();
-            tl.Test3(ref longTimeFrame);
-            candleStickData = longTimeFrame;
+            tl.Result(ref longTimeFrame);
+            //candleStickData = longTimeFrame;
+
+            CalcSupportRegistLevel supportTest = new CalcSupportRegistLevel(longTimeFrame);
+            DrawingValuesSupportLine = DrawSupportLineTest(supportTest.SupportLine(), longTimeFrame.Length); 
+
+            //List<double> testPrices = new List<double>();
+            //foreach(CANDLE_STICK_DEF price in longTimeFrame)
+            //{
+            //    testPrices.Add(price.Close);
+            //}
+            //CalcPeltAlgorithm peltAlgo = new CalcPeltAlgorithm(testPrices.ToArray(),10000);
+            //List<int> pointList = peltAlgo.DetectChangePoints();
+            //foreach(int changePoint in pointList)
+            //{
+            //    Debug.WriteLine($"{changePoint} is {longTimeFrame[changePoint].Datetime}");
+            //}
         }
-        
+
+        private IEnumerable<ISeries> SetChartDrawingValues()
+        {
+            ISeries[] defaultValue = new ISeries[] {
+                new ColumnSeries<double>
+                {
+                    Values = candleStickData.Select( x => x.Volume).ToArray(),
+                    MaxBarWidth = 10,
+                    ScalesYAt = 1,
+                },
+                new CandlesticksSeries<FinancialPointI>
+                {
+                    Values = candleStickData.Select( x => new FinancialPointI(x.High,x.Open,x.Close,x.Low)).ToArray(),
+                    ScalesYAt = 0,
+                },
+                new LineSeries<double>
+                {
+                    Values = candleStickData.Select( x => x.ShowMovingAvrHigh).ToArray(),
+                    Fill = null,
+                    GeometrySize = 0,
+                    Stroke = new SolidColorPaint(SKColors.Red)
+                },
+                new LineSeries<double>
+                {
+                    Values = candleStickData.Select( x => x.ShowMovingAvrLow).ToArray(),
+                    Fill = null,
+                    GeometrySize = 0,
+                    Stroke = new SolidColorPaint(SKColors.Blue)
+                },
+            };
+
+            IEnumerable<ISeries> result = defaultValue.Concat(DrawingValuesSupportLine);
+
+            return result;
+        }
+
         public LiveChartProperties GetCandleData()
         {
             //movingAverTest(ref allCandleDatas.DAY, ref allCandleDatas.MOVING_AVR.DAY, ref allCandleDatas.HOUR);
-            LinearRegressionTest(ref allCandleDatas.WEEK);
+            LinearRegressionTest(ref candleStickData);
             LiveChartProperties chartProperties = new LiveChartProperties();
 
             if (candleStickData != Array.Empty<CANDLE_STICK_DEF>())
@@ -279,36 +352,7 @@ namespace Proj.VVL.Interfaces.Chart
                 double maxPrice = GetMaxPrice();
                 double minPrice = GetMinPrice(maxPrice);
                 double maxVolume = GetMaxVolume();
-
-                chartProperties.Series =
-                new ISeries[]
-                {
-                    new ColumnSeries<double>
-                    {
-                        Values = candleStickData.Select( x => x.Volume).ToArray(),
-                        MaxBarWidth = 10,
-                        ScalesYAt = 1,
-                    },
-                    new CandlesticksSeries<FinancialPointI>
-                    {
-                        Values = candleStickData.Select( x => new FinancialPointI(x.High,x.Open,x.Close,x.Low)).ToArray(),
-                        ScalesYAt = 0,
-                    },
-                    new LineSeries<double>
-                    {
-                        Values = candleStickData.Select( x => x.ShowMovingAvrHigh).ToArray(),
-                        Fill = null,
-                        GeometrySize = 0,
-                        Stroke = new SolidColorPaint(SKColors.Red)
-                    },
-                    new LineSeries<double>
-                    {
-                        Values = candleStickData.Select( x => x.ShowMovingAvrLow).ToArray(),
-                        Fill = null,
-                        GeometrySize = 0,
-                        Stroke = new SolidColorPaint(SKColors.Blue)
-                    }
-                };
+                chartProperties.Series = SetChartDrawingValues();
 
                 chartProperties.xAxes = new[]
                 {
@@ -320,7 +364,6 @@ namespace Proj.VVL.Interfaces.Chart
                         SeparatorsPaint = new SolidColorPaint(SKColors.LightGray),
                     }
                 };
-
 
                 chartProperties.yAxes = new[]
                 {
@@ -339,8 +382,8 @@ namespace Proj.VVL.Interfaces.Chart
                         IsVisible = false,
                         Position = LiveChartsCore.Measure.AxisPosition.End
                     }
+                    
                 };
-
 
                 return chartProperties;
             }

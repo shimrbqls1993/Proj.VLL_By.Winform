@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj.VVL.Data;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,27 +16,38 @@ namespace GW_SKYBLUE_DC_WPF.Behaviors
     {
         private BufferBlock<string> _bufferBlock;
         private ActionBlock<string> _actionBlock;
-        public static string LogDirPath = "";
-        public static string CsvFileName = "";
-        public const string LogFileExtended = ".csv";
-        public static string CsvFilePath = Path.Combine(LogDirPath, DateTime.Now.ToString("yyyy-MM-dd") + "_" + CsvFileName);
-        const string CsvHeader = "Time,Message,FuncName\n";
-        public SaveDebugLogBehavior(string logDirPath, string logFileName)
-        {
-            LogDirPath = logDirPath;
-            CsvFileName = logFileName + LogFileExtended;
 
-            CheckLogDir();
+        const string CommonDebugHeader = "Time,Message,FuncName";
+        private static DefineLogObject CommonDebug = new DefineLogObject("Common", "CommonDebug", CommonDebugHeader, nameof(CommonDebug));
+        const string ApiCallDebugHeader = "Time,Message,FuncName";
+        private static DefineLogObject ApiCallDebug = new DefineLogObject("ApiCall", "ApiCallDebug", ApiCallDebugHeader, nameof(ApiCallDebug));
+        const string TradingDebugHeader = "Time,Stock,BuySell,Price,Amount,Reason";
+        private static DefineLogObject TradingDebug = new DefineLogObject("Trading", "TradingDebug", TradingDebugHeader, nameof(TradingDebug));
+
+
+        public SaveDebugLogBehavior()
+        {
             _bufferBlock = new BufferBlock<string>();
             _actionBlock = new ActionBlock<string>(async csvLine =>
             {
-                if (!File.Exists(CsvFilePath))
+                try 
                 {
-                    File.WriteAllText(CsvFilePath, CsvHeader);
+                    if (csvLine.Contains(CommonDebug.Filter))
+                    {
+                        CommonDebug.WriteLogData(csvLine.Replace(CommonDebug.Filter, ""));
+                    }
+                    else if (csvLine.Contains(ApiCallDebug.Filter))
+                    {
+                        ApiCallDebug.WriteLogData(csvLine.Replace(ApiCallDebug.Filter, ""));
+                    }
+                    else if (csvLine.Contains(TradingDebug.Filter))
+                    {
+                        TradingDebug.WriteLogData(csvLine.Replace(TradingDebug.Filter, ""));
+                    }
                 }
-                using (StreamWriter writer = new StreamWriter(CsvFilePath, true))
+                catch(Exception e)
                 {
-                    await writer.WriteLineAsync(csvLine);
+                    MessageBox.Show(e.Message);
                 }
             }, new ExecutionDataflowBlockOptions
             {
@@ -45,48 +57,7 @@ namespace GW_SKYBLUE_DC_WPF.Behaviors
             _bufferBlock.LinkTo(_actionBlock);
         }
 
-        private void CheckLogDir()
-        {
-            if (!Directory.Exists(LogDirPath))
-            {
-                Directory.CreateDirectory(LogDirPath);
-            }
-        }
-
-        public void ManageCsvLogFile()
-        {
-            DateTime nowDate = DateTime.Now;
-            TimeSpan timeSpan1Days = TimeSpan.FromDays(1);
-            CsvFilePath = Path.Combine(LogDirPath, nowDate.ToString("yyyy-MM-dd") + "_" + CsvFileName);
-            string[] DateTime2Str = new string[10];
-            for(int i =0; i<DateTime2Str.Length; i++)
-            {
-                DateTime2Str[i] = nowDate.ToString("yyyy-MM-dd");
-                nowDate -= timeSpan1Days;
-            }
-
-            string[] logFiles = Directory.GetFiles(LogDirPath);
-            
-            foreach (string logFile in logFiles)
-            {
-                string fileName = Path.GetFileName(logFile);
-                string filePath = Path.Combine(LogDirPath, fileName);
-                for(int i = 0; i <= DateTime2Str.Length; i++)
-                {
-                    if(i == DateTime2Str.Length)
-                    {
-                        File.Delete(filePath);
-                        break;
-                    }
-                    if (fileName.Contains(DateTime2Str[i]))
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-
-        public void Log(string logData, [CallerMemberName] string callerName = "")
+        public void CommonLog(string logData, [CallerMemberName] string callerName = "")
         {
             string logDataWithTime = $"{DateTime.Now.ToString("HH:mm:ss")},{logData},{callerName}";
 #if DEBUG
@@ -95,10 +66,88 @@ namespace GW_SKYBLUE_DC_WPF.Behaviors
             _bufferBlock.Post(logDataWithTime);
         }
 
+        public void ApiCallLog(string logData, [CallerMemberName] string callerName = "")
+        {
+            string logDataWithTime = $"{DateTime.Now.ToString("HH:mm:ss")},{logData},{callerName}";
+#if DEBUG
+            Debug.WriteLine(logData);
+#endif
+            _bufferBlock.Post(logDataWithTime);
+        }
+
+        public void TradingLog(string logData, [CallerMemberName] string callerName = "")
+        {
+            string logDataWithTime = $"{DateTime.Now.ToString("HH:mm:ss")},{logData},{callerName}";
+#if DEBUG
+            Debug.WriteLine(logData);
+#endif
+            _bufferBlock.Post(logDataWithTime);
+        }
+
+
         public async Task CompleteAsync()
         {
             _bufferBlock.Complete();
             await _actionBlock.Completion;
         }
+    }
+
+    public class DefineLogObject
+    {
+
+        public Mutex FileAccessMute = new Mutex();
+        public string Filter = string.Empty;
+        private string DirName = string.Empty;
+        private string _fileName = string.Empty;
+        private string CsvHeader = string.Empty;
+
+        public DefineLogObject(string dirName, string fileName, string csvHeader, string nameofObj)
+        {
+            DirName = dirName;
+            _fileName = fileName;
+            CsvHeader = csvHeader + "\n";
+            Filter = ","+ nameofObj;
+            CheckDirExsit();
+        }
+
+        private void CheckDirExsit()
+        {
+            if (!Directory.Exists(Define.LOG_DIR_PATH))
+            {
+                Directory.CreateDirectory(Define.LOG_DIR_PATH);
+            }
+            if (!Directory.Exists(DirPath))
+            {
+                Directory.CreateDirectory(DirPath);
+            }
+        }
+
+        public void WriteLogData(string logData)
+        {
+            FileAccessMute.WaitOne();
+            if (!File.Exists(FilePath))
+            {
+                File.WriteAllText(FilePath, CsvHeader);
+            }
+            using (StreamWriter writer = new StreamWriter(FilePath, true))
+            {
+                writer.WriteLine(logData);
+            }
+            FileAccessMute.ReleaseMutex();
+        }
+
+        public string FileName
+        {
+            get { return $"{DateTime.Now.ToString("yyyy-MM-dd")}_{_fileName}.csv"; }
+        }
+        public string DirPath
+        {
+            get { return Path.Combine(Define.LOG_DIR_PATH, DirName); }
+        }
+        public string FilePath
+        {
+            get { return Path.Combine(Define.LOG_DIR_PATH,DirName,FileName); }
+        }
+
     }
 }

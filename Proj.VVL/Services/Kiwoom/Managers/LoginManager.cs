@@ -1,4 +1,5 @@
-﻿using Proj.VVL.Interfaces.KiwoomOcx;
+﻿using Proj.VVL.Interfaces.KiwoomHandlers;
+using Proj.VVL.Interfaces.KiwoomOcx;
 using Proj.VVL.Interfaces.KiwoomOcx.Abstractions;
 using Proj.VVL.Model;
 using Proj.VVL.Services.Abstractions;
@@ -18,6 +19,7 @@ namespace Proj.VVL.Services.Kiwoom.Managers
     {
         System.Threading.Timer timer;
         AutoResetEvent autoResetEvent;
+        private static bool LoginInitializeOneTime = false;
 
         public void Start()
         {
@@ -38,6 +40,7 @@ namespace Proj.VVL.Services.Kiwoom.Managers
                  if (MainForm.KiwoomOcxObj.login.GetConnectState() == KIWOOM_STATE_DEF.OK)
                 {
                     MainForm.Instance.viewModel.LOGIN_STATUS = UiOption.UI_STATUS.OK;
+                    InitializeAfterLogin();
                 }
                 else
                 {
@@ -50,5 +53,14 @@ namespace Proj.VVL.Services.Kiwoom.Managers
             }
         }
 
+
+        public void InitializeAfterLogin()
+        {
+            if (!LoginInitializeOneTime)
+            {
+                RealTimeQueryHandler.RemoveAllRegist();
+                LoginInitializeOneTime = true;
+            }
+        }
     }
 }
