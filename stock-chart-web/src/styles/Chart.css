@@ -1,0 +1,455 @@
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: #333;
+}
+
+.code-input-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.code-input {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+    text-align: center;
+}
+
+.code-input:focus {
+    outline: none;
+    border-color: #2962FF;
+    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.1);
+}
+
+.chart-container {
+    padding: 20px;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 600px;
+}
+
+.error-message {
+    color: red;
+    padding: 20px;
+    text-align: center;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+}
+
+.timeframe-selector {
+    margin: 10px 0;
+}
+
+.timeframe-button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.timeframe-button:hover {
+    background: #f5f5f5;
+}
+
+.timeframe-button.active {
+    background: #2962FF;
+    color: #fff;
+}
+
+.indicator-sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    border-right: 1px solid #e0e0e0;
+}
+
+.indicator-sidebar.open {
+    left: 0;
+}
+
+.indicator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.indicator-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.close-button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+.indicator-search {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.indicator-search input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.indicator-list {
+    overflow-y: auto;
+    height: calc(100vh - 120px);
+}
+
+.indicator-category {
+    padding: 10px 15px;
+}
+
+.indicator-category h4 {
+    margin: 10px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.indicator-item {
+    padding: 8px 0;
+}
+
+.indicator-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.timeframe-button.indicator-button {
+    position: relative;
+}
+
+.indicator-button img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+
+.indicator-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.indicator-row label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.settings-button {
+    margin-left: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.settings-button:hover {
+    opacity: 1;
+}
+
+.settings-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+
+.settings-popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.settings-header h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.settings-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+.settings-body {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.ma-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ma-setting-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ma-setting-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ma-setting-group input[type="number"] {
+    width: 60px;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.settings-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.confirm-button, .cancel-button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.confirm-button {
+    background-color: #2962FF;
+    color: white;
+}
+
+.cancel-button {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.confirm-button:hover {
+    background-color: #1E4FC4;
+}
+
+.cancel-button:hover {
+    background-color: #e0e0e0;
+}
+
+.weight-type-selector {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.weight-type-selector h5 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.weight-type-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.weight-type-buttons button {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.weight-type-buttons button:hover {
+    background: #f5f5f5;
+}
+
+.weight-type-buttons button.active {
+    background: #2962FF;
+    color: white;
+    border-color: #2962FF;
+}
+
+/* 지표 설정 탭 스타일 */
+.settings-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    padding: 8px 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button.active {
+    color: #2962FF;
+    border-bottom-color: #2962FF;
+}
+
+.reset-button {
+    margin-left: auto;
+    padding: 5px 10px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.reset-button:hover {
+    color: #2962FF;
+}
+
+.tab-content {
+    padding: 10px 0;
+}
+
+/* 입력 필드와 컨트롤 버튼 */
+.setting-group {
+    margin-bottom: 15px;
+}
+
+.setting-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.input-with-controls {
+    display: flex;
+    align-items: center;
+}
+
+.input-with-controls input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.input-controls {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.input-controls button {
+    padding: 0;
+    width: 20px;
+    height: 15px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-controls button:first-child {
+    border-radius: 2px 2px 0 0;
+    border-bottom: none;
+}
+
+.input-controls button:last-child {
+    border-radius: 0 0 2px 2px;
+}
+
+.input-controls button:hover {
+    background: #e0e0e0;
+}
+
+.range-value {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
+
+.input-with-controls input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    text-align: left;
+}
+
+.input-with-controls input[type="number"]::-webkit-inner-spin-button,
+.input-with-controls input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} 
